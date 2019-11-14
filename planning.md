@@ -20,3 +20,31 @@
 5. Take place in 2020, the next leap year
   * Theme based on modern era? incorporate election memes
   * Apocolyptic setting based on redneck + wallstreet uprising when trump loses the election
+
+
+### Types of Tyles
+* Wall
+* Hole
+* Floor
+
+### Obstacles
+* Arrow (time loop)
+* Skeleton
+
+### Pickups
+* Coins
+* Health upgrade
+* Speed upgrade
+* Stamina upgrade
+* Time increase
+
+### Sounds design
+* 8 bit style sounds
+* menu feedback
+* Low time
+
+### Misc
+* Treasure Rooms:
+   Rooms from certain seeds that are full of permanant upgrades
+
+
