@@ -1,36 +1,40 @@
-from render import *
-from engine import *
+import render
+import engine
 import arcade
+
 
 SCREEN_WIDTH = 720
 SCREEN_HEIGHT = 720
-SCREEN_TITLE = "The Dungon"
+SCREEN_TITLE = "The Dungon" # Mispelled on purpose
 
-
-class MyGame(arcade.Window):
+class Display(arcade.Window):
 
     def __init__(self, width, height, title):
+        """
+        Setup Background variables
+        """
         super().__init__(width, height, title)
-
         arcade.set_background_color(arcade.color.AMAZON)
-
-        # If you have sprite lists, you should create them here,
-        # and set them to None
+        self.display_stage = None
+        self.game_seed = None
+        self.game_render = None
+        self.menu_render = None
+        self.login_menu = None
 
     def setup(self):
-        # Create your sprites and sprite lists here
-        pass
+        """
+        Sets view to menu or login or game once implemented
+        """
+        self.display_stage = "Menu"
+        self.game_render = render.classGameRender.GameRender()
 
     def on_draw(self):
         """
-        Render the screen.
+        Draws based on display stage
         """
-
-        # This command should happen before we start drawing. It will clear
-        # the screen to the background color, and erase what we drew last frame.
         arcade.start_render()
-
-        # Call draw() on all your sprite lists below
+        if self.display_stage == "Menu":
+            arcade.finish_render()
 
     def on_update(self, delta_time):
         """
@@ -76,6 +80,6 @@ class MyGame(arcade.Window):
 
 def main():
     """ Main method """
-    game = MyGame(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
+    game = Display(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
     game.setup()
     arcade.run()
