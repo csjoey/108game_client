@@ -19,7 +19,6 @@
 
 5. Take place in 2020, the next leap year
   * Theme based on modern era? incorporate election memes
-  * Apocolyptic setting based on redneck + wallstreet uprising when trump loses the election
 
 
 ### Types of Tyles
