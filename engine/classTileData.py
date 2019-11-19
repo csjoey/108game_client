@@ -1,1 +1,53 @@
 class TileData():
+
+    def __init__(self):
+        self.floor_grid = []
+        self.surface_grid = []
+        self.tile_dict = {1:"floor",0:"wall",2:"hole",3:"spike"}
+
+
+    def seed_gen(self):
+        """
+        Uses seed to randomly generate floor grid and surface grid
+        :return: none
+        """
+        for row in range(16):
+            self.floor_grid.append([])
+            self.surface_grid.append([])
+            for col in range(16):
+                self.floor_grid[row].append(0)
+                self.surface_grid[row].append(0)
+#                floor_grid[row].append(get_ftile())
+#                surface_grid[row].append(get_stile())
+
+
+    def if_collide(self, row, col):
+        """
+        checks if tile has collision
+        collide_tiles: list of tiles with collision
+        floor_grid: map of floor/wall tiles
+
+        :return: bool
+        """
+        return not floor_grid[row][col]
+
+    def print_grid(self,grid):
+        """
+        test function to print grids
+        :param grid: 2d list of ints
+        :return: none
+        """
+
+        for row in range(len(grid)):
+            for col in range(len(grid)):
+                print(grid[row][col], end=" ")
+            print("")
+        return None
+
+
+##Test
+#world = TileData()
+#world.seed_gen()
+#world.print_grid(world.floor_grid)
+#print("next")
+#world.print_grid(world.surface_grid)
