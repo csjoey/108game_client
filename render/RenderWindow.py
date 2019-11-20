@@ -1,48 +1,71 @@
-import render
-import engine
+from render import classGameRender
+from render import classLoginRender
+from render import classMenuRender
 import arcade
 
 
 SCREEN_WIDTH = 720
 SCREEN_HEIGHT = 720
 SCREEN_TITLE = "The Dungon" # Mispelled on purpose
+GAME_SPEED = 1/60
 
 class Display(arcade.Window):
 
     def __init__(self, width, height, title):
         """
-        Setup Background variables
+        Initialize window and display variables
         """
+        # Setup Window
         super().__init__(width, height, title)
         arcade.set_background_color(arcade.color.AMAZON)
+
+        # Setup display stages
         self.display_stage = None
-        self.game_seed = None
         self.game_render = None
         self.menu_render = None
-        self.login_menu = None
+        self.login_render = None
 
     def setup(self):
         """
-        Sets view to menu or login or game once implemented
+        Sets up views and data
+
         """
-        self.display_stage = "Menu"
-        self.game_render = render.classGameRender.GameRender()
+        self.display_stage = "Game"
+        self.login_render = classLoginRender.LoginRender()
+        self.menu_render = classMenuRender.MenuRender()
+        self.game_render = classGameRender.GameRender()
 
     def on_draw(self):
         """
         Draws based on display stage
         """
         arcade.start_render()
+
+        if self.display_stage == "Login":
+            self.login_render.draw()
+
         if self.display_stage == "Menu":
-            arcade.finish_render()
+            self.menu_render.draw()
+
+        if self.display_stage == "Game":
+            self.game_render.draw()
+
+        arcade.finish_render()
 
     def on_update(self, delta_time):
         """
-        All the logic to move, and the game logic goes here.
-        Normally, you'll call update() on the sprite lists that
-        need it.
+       Game update logic
         """
-        pass
+        if self.display_stage == "Login":
+            self.login_render.update()
+
+        if self.display_stage == "Menu":
+            self.menu_render.update()
+
+        if self.display_stage == "Game":
+            self.game_render.update()
+
+
 
     def on_key_press(self, key, key_modifiers):
         """
