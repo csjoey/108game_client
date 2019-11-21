@@ -38,7 +38,10 @@ class TileData():
                         self.floor_grid[row].append(0)
                 else:
                     self.floor_grid[row].append(1)
-                    self.surface_grid[row].append(random.randint(0,6))
+                    if random.randint(0,10) == 7:
+                        self.surface_grid[row].append(random.randint(1,4))
+                    else:
+                        self.surface_grid[row].append(0)
 #                floor_grid[row].append(get_ftile())
 #                surface_grid[row].append(get_stile())
 

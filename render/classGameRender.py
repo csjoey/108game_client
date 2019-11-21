@@ -21,6 +21,7 @@ class GameRender:
 
         # Ent textures
         self.texture_player = None
+        self.texture_coin = None
         self.texture_upgrade_speed = None
         self.texture_upgrade_maxhealth = None
         self.texture_healthpack = None
@@ -34,9 +35,10 @@ class GameRender:
     def setup(self):
         self.engine = classEngine.Engine()
         self.engine.setup()
-        self.engine.tile_data.print_grid(self.engine.tile_data.floor_grid)
+        self.engine.tile_data.print_grid(self.engine.tile_data.surface_grid)
 
         self.texture_player = arcade.load_texture("res/images/knight_f_idle_anim_f1.png")
+        self.texture_coin = arcade.load_texture("res/images/coin_anim_f0.png")
         self.texture_upgrade_speed = arcade.load_texture("res/images/flask_big_blue.png")
         self.texture_upgrade_maxhealth = arcade.load_texture("res/images/flask_big_red.png")
         self.texture_healthpack = arcade.load_texture("res/images/ui_heart_full.png")
@@ -54,9 +56,16 @@ class GameRender:
             self.texture_floor2,
             self.texture_hole,
             self.texture_spike
-                            ]
+        ]
 
-
+        self.fg_textures = [
+            None,
+            self.texture_coin,
+            self.texture_healthpack,
+            self.texture_upgrade_maxhealth,
+            self.texture_upgrade_speed,
+            None
+        ]
 
     def draw(self):
         self.draw_bg()
@@ -78,8 +87,14 @@ class GameRender:
                     self.bg_textures[self.engine.tile_data.floor_grid[row][col]]
                 )
 
-
-
-
     def draw_fg(self):
-        pass
+        for row in range(16):
+            for col in range(16):
+                if self.engine.tile_data.surface_grid[row][col] not in [0,5]:
+                    arcade.draw_texture_rectangle(
+                        (15-col)*45+22.5,
+                        (15-row)*45+22.5,
+                        30,
+                        30,
+                        self.fg_textures[self.engine.tile_data.surface_grid[row][col]]
+                    )

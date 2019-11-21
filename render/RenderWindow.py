@@ -9,7 +9,7 @@ import arcade
 SCREEN_WIDTH = 720
 SCREEN_HEIGHT = 720
 SCREEN_TITLE = "The Dungon" # Mispelled on purpose
-GAME_SPEED = 1/60
+GAME_SPEED = 1/30
 
 class Display(arcade.Window):
 
@@ -17,8 +17,6 @@ class Display(arcade.Window):
         """
         Initialize window and display variables
         """
-        # Env Vars
-        self.timer = None
 
         # Setup Window
         super().__init__(width, height, title)
@@ -35,7 +33,6 @@ class Display(arcade.Window):
         Sets up views and data
 
         """
-        self.timer = 0
         self.display_stage = "Game"
 
         self.login_render = classLoginRender.LoginRender()
@@ -46,6 +43,10 @@ class Display(arcade.Window):
 
         self.game_render = classGameRender.GameRender()
         self.game_render.setup()
+
+        # Scheduling
+        arcade.schedule(self.scheduled1, 1)
+
 
     def on_draw(self):
         """
@@ -68,13 +69,6 @@ class Display(arcade.Window):
         """
        Game update logic
         """
-        if self.timer == 300:
-            self.timer = 0
-            print("TIMER:5")
-        else:
-            self.timer += 1
-
-
 
         if self.display_stage == "Login":
             self.login_render.update()
@@ -118,6 +112,9 @@ class Display(arcade.Window):
         Called when a user releases a mouse button.
         """
         pass
+
+    def scheduled1(*args,**kwargs):
+        print("1 Second")
 
 
 def main():
