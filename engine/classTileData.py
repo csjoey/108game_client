@@ -3,7 +3,20 @@ class TileData():
     def __init__(self):
         self.floor_grid = []
         self.surface_grid = []
-        self.tile_dict = {1:"floor",0:"wall",2:"hole",3:"spike"}
+        self.tile_dict = {
+            0: "wall",
+            1: "floor",
+            2: "hole",
+            3: "spike"
+        }
+        self.obj_dict = {
+            0: "nothing",
+            1: "coin",
+            2: "heart",
+            3: "max health",
+            4: "max speed",
+            5: "enemy spawn"
+        }
 
     def seed_gen(self):
         """
