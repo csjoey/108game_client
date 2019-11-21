@@ -26,11 +26,15 @@ class GameRender:
         self.texture_healthpack = None
         self.texture_enemy = None
 
+        # Texture Dicts
+        self.bg_textures = None
+        self.fg_textures = None
 
 
     def setup(self):
         self.engine = classEngine.Engine()
         self.engine.setup()
+        self.engine.tile_data.print_grid(self.engine.tile_data.floor_grid)
 
         self.texture_player = arcade.load_texture("res/images/knight_f_idle_anim_f1.png")
         self.texture_upgrade_speed = arcade.load_texture("res/images/flask_big_blue.png")
@@ -43,6 +47,14 @@ class GameRender:
         self.texture_wall = arcade.load_texture("res/images/wall_mid.png")
         self.texture_floor1 = arcade.load_texture("res/images/floor_1.png")
         self.texture_floor2 = arcade.load_texture("res/images/floor_2.png")
+
+        self.bg_textures = [
+            self.texture_wall,
+            self.texture_floor1,
+            self.texture_floor2,
+            self.texture_hole,
+            self.texture_spike
+                            ]
 
 
 
@@ -58,6 +70,14 @@ class GameRender:
     def draw_bg(self):
         for row in range(16):
             for col in range(16):
+                arcade.draw_texture_rectangle(
+                    (15-col)*45+22.5,
+                    (15-row)*45+22.5,
+                    45,
+                    45,
+                    self.bg_textures[self.engine.tile_data.floor_grid[row][col]]
+                )
+
 
 
 
