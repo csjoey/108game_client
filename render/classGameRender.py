@@ -31,6 +31,7 @@ class GameRender:
         self.bg_textures = None
         self.fg_textures = None
 
+        # Generation
 
     def setup(self):
         self.engine = classEngine.Engine()
@@ -44,11 +45,11 @@ class GameRender:
         self.texture_healthpack = arcade.load_texture("res/images/ui_heart_full.png")
         self.texture_enemy = arcade.load_texture("res/images/imp_idle_anim_f1.png")
 
-        self.texture_hole = arcade.load_texture("res/images/hole.png")
-        self.texture_spike = arcade.load_texture("res/images/floor_spikes_anim_f3.png")
-        self.texture_wall = arcade.load_texture("res/images/wall_mid.png")
-        self.texture_floor1 = arcade.load_texture("res/images/floor_1.png")
-        self.texture_floor2 = arcade.load_texture("res/images/floor_2.png")
+        self.texture_hole = arcade.load_texture("res/images/hole.png", width=45, height=45)
+        self.texture_spike = arcade.load_texture("res/images/floor_spikes_anim_f3.png", width=45, height=45)
+        self.texture_wall = arcade.load_texture("res/images/wall_mid.png", width=45, height=45)
+        self.texture_floor1 = arcade.load_texture("res/images/floor_1.png", width=45, height=45)
+        self.texture_floor2 = arcade.load_texture("res/images/floor_3.png", width=45, height=45)
 
         self.bg_textures = [
             self.texture_wall,

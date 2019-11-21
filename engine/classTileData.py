@@ -21,11 +21,14 @@ class TileData():
             5: "enemy spawn"
         }
 
-    def seed_gen(self):
+    def seed_gen(self, seed):
         """
         Uses seed to randomly generate floor grid and surface grid
-        :return: none
+        :return:
+         none
         """
+        self.floor_grid = []
+        self.surface_grid = []
         for row in range(16):
             self.floor_grid.append([])
             self.surface_grid.append([])
@@ -38,7 +41,7 @@ class TileData():
                         self.floor_grid[row].append(0)
                 else:
                     self.floor_grid[row].append(1)
-                    if random.randint(0,10) == 7:
+                    if random.randint(0,20) == 7:
                         self.surface_grid[row].append(random.randint(1,4))
                     else:
                         self.surface_grid[row].append(0)
@@ -68,10 +71,11 @@ class TileData():
             print("")
         return None
 
-
+'''
 #Test
 world = TileData()
 world.seed_gen()
 world.print_grid(world.floor_grid)
 print("next")
 world.print_grid(world.surface_grid)
+'''

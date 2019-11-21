@@ -45,7 +45,7 @@ class Display(arcade.Window):
         self.game_render.setup()
 
         # Scheduling
-        arcade.schedule(self.scheduled1, 1)
+        arcade.schedule(self.scheduled1, 3)
 
 
     def on_draw(self):
@@ -113,8 +113,9 @@ class Display(arcade.Window):
         """
         pass
 
-    def scheduled1(*args,**kwargs):
-        print("1 Second")
+    def scheduled1(self,*args,**kwargs):
+        print("3 Seconds")
+#        self.game_render.engine.tile_data.seed_gen()
 
 
 def main():
