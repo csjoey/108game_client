@@ -66,7 +66,6 @@ class Display(arcade.Window):
             self.game_render.update()
 
 
-
     def on_key_press(self, key, key_modifiers):
         """
         Called whenever a key on the keyboard is pressed.
