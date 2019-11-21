@@ -7,6 +7,7 @@ class Player():
         self.move_delay = 60
         self.dead = 0
 
+
     def move(self, new_row, new_col):
         self.row = new_row
         self.col = new_col

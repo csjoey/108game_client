@@ -4,6 +4,9 @@ from engine import classEngine
 class GameRender:
 
     def __init__(self):
+        # Engine
+        self.engine = None
+
         # Map sprite list
         self.map_sprites = None
         # Player Enemy and Upgrade sprite list
@@ -13,30 +16,50 @@ class GameRender:
         self.texture_wall = None
         self.texture_floor1 = None
         self.texture_floor2 = None
+        self.texture_spike = None
+        self.texture_hole = None
 
-        # Ent sprites
-        self.sprite_player = None
+        # Ent textures
+        self.texture_player = None
+        self.texture_upgrade_speed = None
+        self.texture_upgrade_maxhealth = None
+        self.texture_healthpack = None
+        self.texture_enemy = None
+
 
 
     def setup(self):
-        self.ent_sprites = arcade.SpriteList()
+        self.engine = classEngine.Engine()
+        self.engine.setup()
 
+        self.texture_player = arcade.load_texture("res/images/knight_f_idle_anim_f1.png")
+        self.texture_upgrade_speed = arcade.load_texture("res/images/flask_big_blue.png")
+        self.texture_upgrade_maxhealth = arcade.load_texture("res/images/flask_big_red.png")
+        self.texture_healthpack = arcade.load_texture("res/images/ui_heart_full.png")
+        self.texture_enemy = arcade.load_texture("res/images/imp_idle_anim_f1.png")
+
+        self.texture_hole = arcade.load_texture("res/images/hole.png")
+        self.texture_spike = arcade.load_texture("res/images/floor_spikes_anim_f3.png")
         self.texture_wall = arcade.load_texture("res/images/wall_mid.png")
-
-
+        self.texture_floor1 = arcade.load_texture("res/images/floor_1.png")
+        self.texture_floor2 = arcade.load_texture("res/images/floor_2.png")
 
 
 
     def draw(self):
-        arcade.draw_text("DEBUG:GAME",0,0,arcade.color.WHITE)
         self.draw_bg()
+        self.draw_fg()
+        arcade.draw_text("DEBUG:GAME", 0, 0, arcade.color.WHITE)
 
 
     def update(self):
         pass
 
     def draw_bg(self):
-        for x in range(16):
-            for y in range(16):
-                arcade.draw_texture_rectangle(45*x+22.5,45*y+22.5,45,45,self.texture_wall)
+        for row in range(16):
+            for col in range(16):
 
+
+
+    def draw_fg(self):
+        pass

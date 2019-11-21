@@ -5,9 +5,10 @@ class TileData():
         self.surface_grid = []
         self.tile_dict = {
             0: "wall",
-            1: "floor",
-            2: "hole",
-            3: "spike"
+            1: "floor1",
+            2: "floor2",
+            3: "hole",
+            4: "spike"
         }
         self.obj_dict = {
             0: "nothing",
