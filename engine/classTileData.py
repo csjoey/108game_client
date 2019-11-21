@@ -5,7 +5,6 @@ class TileData():
         self.surface_grid = []
         self.tile_dict = {1:"floor",0:"wall",2:"hole",3:"spike"}
 
-
     def seed_gen(self):
         """
         Uses seed to randomly generate floor grid and surface grid
@@ -15,23 +14,28 @@ class TileData():
             self.floor_grid.append([])
             self.surface_grid.append([])
             for col in range(16):
-                self.floor_grid[row].append(0)
+                if (row == 0 or row == 15) or (col == 0 or col == 15):
+                    if (row == 7 or row == 8) or (col == 7 or col == 8):
+                        self.floor_grid[row].append(0)
+                    else:
+                        self.floor_grid[row].append(1)
+                else:
+                    self.floor_grid[row].append(0)
                 self.surface_grid[row].append(0)
 #                floor_grid[row].append(get_ftile())
 #                surface_grid[row].append(get_stile())
 
-
     def if_collide(self, row, col):
         """
         checks if tile has collision
+        :param
         collide_tiles: list of tiles with collision
         floor_grid: map of floor/wall tiles
-
         :return: bool
         """
-        return not floor_grid[row][col]
+        return not self.floor_grid[row][col]
 
-    def print_grid(self,grid):
+    def print_grid(self, grid):
         """
         test function to print grids
         :param grid: 2d list of ints
