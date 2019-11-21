@@ -4,6 +4,8 @@ from render import classMenuRender
 import arcade
 
 
+
+
 SCREEN_WIDTH = 720
 SCREEN_HEIGHT = 720
 SCREEN_TITLE = "The Dungon" # Mispelled on purpose
@@ -15,6 +17,9 @@ class Display(arcade.Window):
         """
         Initialize window and display variables
         """
+        # Env Vars
+        self.timer = None
+
         # Setup Window
         super().__init__(width, height, title)
         arcade.set_background_color(arcade.color.AMAZON)
@@ -30,10 +35,17 @@ class Display(arcade.Window):
         Sets up views and data
 
         """
+        self.timer = 0
         self.display_stage = "Game"
+
         self.login_render = classLoginRender.LoginRender()
+        self.login_render.setup()
+
         self.menu_render = classMenuRender.MenuRender()
+        self.menu_render.setup()
+
         self.game_render = classGameRender.GameRender()
+        self.game_render.setup()
 
     def on_draw(self):
         """
@@ -56,6 +68,14 @@ class Display(arcade.Window):
         """
        Game update logic
         """
+        if self.timer == 300:
+            self.timer = 0
+            print("TIMER:5")
+        else:
+            self.timer += 1
+
+
+
         if self.display_stage == "Login":
             self.login_render.update()
 
