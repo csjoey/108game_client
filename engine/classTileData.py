@@ -14,7 +14,13 @@ class TileData():
             self.floor_grid.append([])
             self.surface_grid.append([])
             for col in range(16):
-                self.floor_grid[row].append(0)
+                if (row == 0 or row == 15) or (col == 0 or col == 15):
+                    if (row == 7 or row == 8) or (col == 7 or col == 8):
+                        self.floor_grid[row].append(0)
+                    else:
+                        self.floor_grid[row].append(1)
+                else:
+                    self.floor_grid[row].append(0)
                 self.surface_grid[row].append(0)
 #                floor_grid[row].append(get_ftile())
 #                surface_grid[row].append(get_stile())
