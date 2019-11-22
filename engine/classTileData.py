@@ -52,16 +52,16 @@ class TileData():
         """
         max_items = 10
         items = int(seed[0:4], 16) % max_items  # Get num of items to render based on sha
-
+        print("---")
         for str_pos in range(items + 1):
             # Get item positions and values based on sha string
-            # Items include nothing and enemy spawns
-            row = (int(seed[str_pos*4:str_pos*4+4], 16) % 13) + 2
-            col = (int(seed[str_pos*4+1:str_pos*4+5], 16) % 13) + 2
-            item = int(seed[str_pos*4+2:str_pos*4+6], 16) % 6
+            # Items include nothing and enemy spawns in addition to others
+            row = (int(seed[str_pos*4:str_pos*4+5], 16) % 13) + 2
+            col = (int(seed[str_pos*4+1:str_pos*4+6], 16) % 13) + 2
+            item = int(seed[str_pos*4+2:str_pos*4+7], 16) % 6
             print("Item {} at {},{}".format(self.obj_dict[item], row, col))
             self.surface_grid[row][col] = item
-
+        print("---")
 
     def if_collide(self, row, col):
         """
@@ -84,7 +84,6 @@ class TileData():
             for col in range(len(grid)):
                 print(grid[row][col], end=" ")
             print("")
-        return None
 
 '''
 #Test

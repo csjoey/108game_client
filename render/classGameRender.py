@@ -81,11 +81,11 @@ class GameRender:
         for row in range(16):
             for col in range(16):
                 arcade.draw_texture_rectangle(
-                    (15-col)*45+22.5,
-                    (15-row)*45+22.5,
+                    row*45+22.5,
+                    col*45+22.5,
                     45,
                     45,
-                    self.bg_textures[self.engine.tile_data.floor_grid[row][col]]
+                    self.bg_textures[self.engine.tile_data.floor_grid[15-row][15-col]]
                 )
 
     def draw_fg(self):
@@ -93,8 +93,8 @@ class GameRender:
             for col in range(16):
                 if self.engine.tile_data.surface_grid[row][col] not in [0,5]:
                     arcade.draw_texture_rectangle(
-                        (15-col)*45+22.5,
-                        (15-row)*45+22.5,
+                        row*45+22.5,
+                        col*45+22.5,
                         30,
                         30,
                         self.fg_textures[self.engine.tile_data.surface_grid[row][col]]
