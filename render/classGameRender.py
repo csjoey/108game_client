@@ -71,11 +71,14 @@ class GameRender:
     def draw(self):
         self.draw_bg()
         self.draw_fg()
+        self.draw_player()
         arcade.draw_text("DEBUG:GAME", 0, 0, arcade.color.WHITE)
 
-
     def update(self):
-        pass
+        self.engine.update()
+
+    def keypress(self, key):
+        self.engine.keypress(key)
 
     def draw_bg(self):
         for row in range(16):
@@ -99,3 +102,12 @@ class GameRender:
                         30,
                         self.fg_textures[self.engine.tile_data.surface_grid[row][col]]
                     )
+
+    def draw_player(self):
+        arcade.draw_texture_rectangle(
+            self.engine.player.row * 45 + 22.5,
+            self.engine.player.col * 45 + 22.5,
+            45,
+            45,
+            self.texture_player
+        )

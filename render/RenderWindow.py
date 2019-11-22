@@ -24,17 +24,17 @@ class Display(arcade.Window):
 
         # Setup display stages
         self.display_stage = None
-        self.game_render = None
-        self.menu_render = None
-        self.login_render = None
 
     def setup(self):
         """
         Sets up views and data
 
         """
-        self.display_stage = "Game"
+        self.display_stage = classGameRender.GameRender()
+        self.display_stage.setup()
 
+        # Testing alternative to code below with code above in setup,init,update,and draw
+        """
         self.login_render = classLoginRender.LoginRender()
         self.login_render.setup()
 
@@ -46,22 +46,14 @@ class Display(arcade.Window):
 
         # Scheduling
 #        arcade.schedule(self.scheduled1, 1)
-
-
+        """
     def on_draw(self):
         """
         Draws based on display stage
         """
         arcade.start_render()
 
-        if self.display_stage == "Login":
-            self.login_render.draw()
-
-        if self.display_stage == "Menu":
-            self.menu_render.draw()
-
-        if self.display_stage == "Game":
-            self.game_render.draw()
+        self.display_stage.draw()
 
         arcade.finish_render()
 
@@ -69,16 +61,7 @@ class Display(arcade.Window):
         """
        Game update logic
         """
-
-        if self.display_stage == "Login":
-            self.login_render.update()
-
-        if self.display_stage == "Menu":
-            self.menu_render.update()
-
-        if self.display_stage == "Game":
-            self.game_render.update()
-
+        self.display_stage.update()
 
     def on_key_press(self, key, key_modifiers):
         """
@@ -87,7 +70,7 @@ class Display(arcade.Window):
         For a full list of keys, see:
         http://arcade.academy/arcade.key.html
         """
-        pass
+        self.display_stage.keypress(key)
 
     def on_key_release(self, key, key_modifiers):
         """

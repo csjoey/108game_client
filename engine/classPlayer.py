@@ -1,13 +1,13 @@
 class Player():
-    def __init__(self):
-        self.row = None
-        self.col = None
-        self.health = None
-        self.max_health = 3
-        self.move_delay = 60
+    def __init__(self,max_health_upgrades, speed_upgrades, start_row=1, start_col=1):
+        self.row = start_row
+        self.col = start_col
+        self.health = 3 + max_health_upgrades
+        self.max_health = 3 + max_health_upgrades
+        self.move_delay = 60 - speed_upgrades*5
         self.dead = 0
 
-
+    # Note origin is right,up
     def move(self, new_row, new_col):
         self.row = new_row
         self.col = new_col
