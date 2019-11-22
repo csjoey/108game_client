@@ -14,8 +14,6 @@ class Engine:
         self.player = None
         self.player_data = None
 
-
-
     def setup(self):
         self.seed = hash_string(input("Seed through console for now:"))
 
@@ -26,6 +24,10 @@ class Engine:
         self.player = classPlayer.Player()
 
         self.enemy_list = []
+
+    def next_map(self):
+        self.seed = hash_string(self.seed)
+        self.tile_data.seed_gen(self.seed)
 
 # Locally global functions
 def hash_string(str_obj):

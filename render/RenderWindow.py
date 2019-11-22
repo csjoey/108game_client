@@ -45,7 +45,7 @@ class Display(arcade.Window):
         self.game_render.setup()
 
         # Scheduling
-        arcade.schedule(self.scheduled1, 3)
+#        arcade.schedule(self.scheduled1, 1)
 
 
     def on_draw(self):
@@ -93,6 +93,7 @@ class Display(arcade.Window):
         """
         Called whenever the user lets off a previously pressed key.
         """
+        self.game_render.engine.next_map()
         pass
 
     def on_mouse_motion(self, x, y, delta_x, delta_y):
@@ -114,7 +115,7 @@ class Display(arcade.Window):
         pass
 
     def scheduled1(self,*args,**kwargs):
-        print("3 Seconds")
+        print("1 Second")
 #        self.game_render.engine.tile_data.seed_gen()
 
 

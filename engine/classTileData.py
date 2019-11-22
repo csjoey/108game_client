@@ -21,6 +21,7 @@ class TileData():
             5: "enemy spawn"
         }
 
+
     def seed_gen(self, seed):
         """
         Uses seed to randomly generate floor grid and surface grid
@@ -30,9 +31,12 @@ class TileData():
         self.floor_grid = []
         self.surface_grid = []
         for row in range(16):
+
             self.floor_grid.append([])
             self.surface_grid.append([])
             for col in range(16):
+
+                self.surface_grid[row].append(0)
                 if (row == 0 or row == 15) or (col == 0 or col == 15):
                     self.surface_grid[row].append(0)
                     if (row == 7 or row == 8) or (col == 7 or col == 8):
@@ -41,12 +45,23 @@ class TileData():
                         self.floor_grid[row].append(0)
                 else:
                     self.floor_grid[row].append(1)
-                    if random.randint(0,20) == 7:
-                        self.surface_grid[row].append(random.randint(1,4))
-                    else:
-                        self.surface_grid[row].append(0)
-#                floor_grid[row].append(get_ftile())
-#                surface_grid[row].append(get_stile())
+
+        """
+        Begin population of the surface map based on game seed
+        No real rules, just psuedo-randomness to a max number of items based on hex->int
+        """
+        max_items = 10
+        items = int(seed[0:4], 16) % max_items  # Get num of items to render based on sha
+
+        for str_pos in range(items + 1):
+            # Get item positions and values based on sha string
+            # Items include nothing and enemy spawns
+            row = (int(seed[str_pos*4:str_pos*4+4], 16) % 13) + 2
+            col = (int(seed[str_pos*4+1:str_pos*4+5], 16) % 13) + 2
+            item = int(seed[str_pos*4+2:str_pos*4+6], 16) % 6
+            print("Item {} at {},{}".format(self.obj_dict[item], row, col))
+            self.surface_grid[row][col] = item
+
 
     def if_collide(self, row, col):
         """
