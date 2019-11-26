@@ -1,7 +1,10 @@
 #108game_client
 ## Special Thanks
     Sprites
-    Insert Links Here
+    Robert, at https://0x72.itch.io/dungeontileset-ii
+    
+    Various Sound Effects
+    Little Robot Sound Factory, at www.littlerobotsoundfactory.com
 
     Music
     Menu music-

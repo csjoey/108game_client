@@ -19,6 +19,14 @@ class Engine:
         self.speed_upgrades = None
         self.tick = None
 
+        self.switch = {
+            1: self.coin_pickup,
+            2: self.heart_pickup,
+            3: self.max_health_pickup,
+            4: self.speed_pickup,
+            5: self.enemy_spawn
+        }
+
     def setup(self):
         #self.seed = hash_string(input("Seed through console for now:"))
         self.seed = hash_string("J")
@@ -72,14 +80,8 @@ class Engine:
 
     def check_player_location(self):
         if self.tile_data.surface_grid[self.player.row][self.player.col]:
-            switch = {
-                1:self.coin_pickup,
-                2:self.heart_pickup,
-                3:self.max_health_pickup,
-                4:self.speed_pickup,
-                5:self.enemy_spawn
-            }
-            func = switch.get(self.tile_data.surface_grid[self.player.row][self.player.col])
+
+            func = self.switch.get(self.tile_data.surface_grid[self.player.row][self.player.col])
             self.tile_data.surface_grid[self.player.row][self.player.col] = 0
             func()
 
