@@ -35,7 +35,8 @@ class Engine:
     def update(self):
         self.check_player_location()
         self.player.sword_ticker()
-
+        if self.player.draw_sword:
+            self.sword_collide()
 
     def keypress(self,key):
         if key == arcade.key.SPACE:
@@ -101,6 +102,11 @@ class Engine:
 
     def attack(self):
         self.player.draw_sword = True
+
+    def sword_collide(self):
+        for enemy in self.enemy_list:
+            if enemy.row == (self.player.row - 1 + (2 * self.player.face_right)) and enemy.col == self.player.col:
+                enemy.kill()
 
 # Locally global functions
 def hash_string(str_obj):
