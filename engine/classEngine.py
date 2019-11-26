@@ -48,6 +48,7 @@ class Engine:
         self.max_health_upgrades = self.player_data.max_health_upgrades
         self.speed_upgrades = self.player_data.max_speed_upgrades
         self.total_coins = self.tile_data.return_coins()
+        print(self.total_coins)
 
         self.player = classPlayer.Player(self.max_health_upgrades, self.speed_upgrades)
 
