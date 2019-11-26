@@ -20,12 +20,14 @@ class GameRender:
         self.texture_hole = None
 
         # Ent textures
-        self.texture_player = None
+        self.texture_player_right = None
+        self.texture_player_left = None
         self.texture_coin = None
         self.texture_upgrade_speed = None
         self.texture_upgrade_maxhealth = None
         self.texture_healthpack = None
         self.texture_enemy = None
+        self.texture_sword = None
 
         # Texture Dicts
         self.bg_textures = None
@@ -38,12 +40,14 @@ class GameRender:
         self.engine.setup()
         self.engine.tile_data.print_grid(self.engine.tile_data.surface_grid)
 
-        self.texture_player = arcade.load_texture("res/images/knight_f_idle_anim_f1.png")
+        self.texture_player_right = arcade.load_texture("res/images/knight_f_idle_anim_f1.png")
+        self.texture_player_left = arcade.load_texture("res/images/knight_f_idle_anim_f1.png", mirrored=True)
         self.texture_coin = arcade.load_texture("res/images/coin_anim_f0.png")
         self.texture_upgrade_speed = arcade.load_texture("res/images/flask_big_blue.png")
         self.texture_upgrade_maxhealth = arcade.load_texture("res/images/flask_big_red.png")
         self.texture_healthpack = arcade.load_texture("res/images/ui_heart_full.png")
         self.texture_enemy = arcade.load_texture("res/images/imp_idle_anim_f1.png")
+        self.texture_sword = arcade.load_texture("res/images/weapon_regular_sword.png", width=10, height=21)
 
         self.texture_hole = arcade.load_texture("res/images/hole.png", width=45, height=45)
         self.texture_spike = arcade.load_texture("res/images/floor_spikes_anim_f3.png", width=45, height=45)
@@ -73,6 +77,8 @@ class GameRender:
         self.draw_fg()
         self.draw_player()
         arcade.draw_text("DEBUG:GAME", 0, 0, arcade.color.WHITE)
+        if self.engine.player.draw_sword:
+            self.draw_sword()
 
     def update(self):
         self.engine.update()
@@ -104,10 +110,26 @@ class GameRender:
                     )
 
     def draw_player(self):
+        if self.engine.player.face_right:
+            texture = self.texture_player_right
+        else:
+            texture = self.texture_player_left
         arcade.draw_texture_rectangle(
             self.engine.player.row * 45 + 22.5,
             self.engine.player.col * 45 + 22.5,
             45,
             45,
-            self.texture_player
+            texture
         )
+
+    def draw_sword(self):
+        arcade.draw_texture_rectangle(
+            (self.engine.player.row - 1 + (2 * self.engine.player.face_right)) * 45 + 22.5,
+            self.engine.player.col * 45 + 22.5,
+            10,
+            21,
+            self.texture_sword,
+            (90 + (180 * self.engine.player.face_right))
+        )
+
+

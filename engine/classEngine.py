@@ -17,6 +17,7 @@ class Engine:
 
         self.max_health_upgrades = None
         self.speed_upgrades = None
+        self.tick = None
 
     def setup(self):
         #self.seed = hash_string(input("Seed through console for now:"))
@@ -33,6 +34,12 @@ class Engine:
 
     def update(self):
         self.check_player_location()
+        if self.player.draw_sword:
+            self.tick -= 1
+        else:
+            self.tick = 10
+        if self.tick == 0:
+            self.player.draw_sword = False
 
     def keypress(self,key):
         if key == arcade.key.SPACE:
@@ -43,12 +50,17 @@ class Engine:
 
         if key == arcade.key.A:
             self.player_move(-1, 0)
+            self.player.face_right = False
 
         if key == arcade.key.S:
             self.player_move(0, -1)
 
         if key == arcade.key.D:
             self.player_move(1, 0)
+            self.player.face_right = True
+
+        if key == arcade.key.ENTER:
+            self.attack()
 
     def next_map(self):
         self.seed = hash_string(self.seed)
@@ -91,6 +103,8 @@ class Engine:
     def enemy_spawn(self):
         return None
 
+    def attack(self):
+        self.player.draw_sword = True
 
 # Locally global functions
 def hash_string(str_obj):

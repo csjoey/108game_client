@@ -7,6 +7,8 @@ class Player():
         self.move_delay = 60 - speed_upgrades*5
         self.dead = 0
         self.coins = 0
+        self.face_right = True
+        self.draw_sword = False
 
     # Note origin is bottom left
     def move(self, new_row, new_col):
