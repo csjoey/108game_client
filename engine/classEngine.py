@@ -48,7 +48,7 @@ class Engine:
         self.max_health_upgrades = self.player_data.max_health_upgrades
         self.speed_upgrades = self.player_data.max_speed_upgrades
         self.total_coins = self.tile_data.return_coins()
-        print(self.total_coins)
+        self.tick = 60
 
         self.player = classPlayer.Player(self.max_health_upgrades, self.speed_upgrades)
 
@@ -65,7 +65,11 @@ class Engine:
     def update(self):
         self.check_player_location()
         if len(self.enemy_list):
-            self.enemy_movement()
+            if self.tick < 1:
+                self.enemy_movement()
+                self.tick = 60
+            else:
+                self.tick -= 1
         self.player.sword_ticker()
         if self.player.draw_sword:
             self.sword_collide()
