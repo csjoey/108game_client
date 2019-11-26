@@ -1,8 +1,10 @@
 import random
+from engine import classEnemy
 
 class TileData():
 
     def __init__(self):
+        self.enemy_list = []
         self.floor_grid = []
         self.surface_grid = []
         self.tile_dict = {
@@ -53,6 +55,7 @@ class TileData():
         max_items = 8
         items = int(seed[0:4], 16) % max_items  # Get num of items to render based on sha
         print("---")
+        self.enemy_list = []
         for str_pos in range(items + 1):
             # Get item positions and values based on sha string
             # Items include nothing and enemy spawns in addition to others
@@ -60,6 +63,10 @@ class TileData():
             col = (int(seed[str_pos*4+1:str_pos*4+6], 16) % 13) + 2
             item = int(seed[str_pos*4+2:str_pos*4+7], 16) % 6
             self.surface_grid[row][col] = item
+
+            if item == 5:
+                self.enemy_list.append(classEnemy.Enemy(row, col))
+
             print("{},{} : {}".format(row,col, self.obj_dict[item]))
         print("---")
 

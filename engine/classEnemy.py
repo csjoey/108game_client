@@ -3,9 +3,9 @@ import random
 
 class Enemy:
 
-    def __init__(self):
-        self.row = None
-        self.col = None
+    def __init__(self, row, col):
+        self.row = row
+        self.col = col
         self.dead = 0
         self.open_moves = []
 

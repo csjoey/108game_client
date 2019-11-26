@@ -38,7 +38,6 @@ class GameRender:
     def setup(self):
         self.engine = classEngine.Engine()
         self.engine.setup()
-        self.engine.tile_data.print_grid(self.engine.tile_data.surface_grid)
 
         self.texture_player_right = arcade.load_texture("res/images/knight_f_idle_anim_f1.png")
         self.texture_player_left = arcade.load_texture("res/images/knight_f_idle_anim_f1.png", mirrored=True)
@@ -76,9 +75,10 @@ class GameRender:
         self.draw_bg()
         self.draw_fg()
         self.draw_player()
-        arcade.draw_text("DEBUG:GAME", 0, 0, arcade.color.WHITE)
+        self.draw_enemies()
         if self.engine.player.draw_sword:
             self.draw_sword()
+        arcade.draw_text("DEBUG:GAME", 0, 0, arcade.color.WHITE)
 
     def update(self):
         self.engine.update()
@@ -122,6 +122,16 @@ class GameRender:
             texture
         )
 
+    def draw_enemies(self):
+        for enemy in self.engine.enemy_list:
+            arcade.draw_texture_rectangle(
+                enemy.row * 45 + 22.5,
+                enemy.col * 45 + 22.5,
+                45,
+                45,
+                self.texture_enemy
+            )
+
     def draw_sword(self):
         arcade.draw_texture_rectangle(
             (self.engine.player.row - 1 + (2 * self.engine.player.face_right)) * 45 + 22.5,
@@ -131,5 +141,4 @@ class GameRender:
             self.texture_sword,
             (90 + (180 * self.engine.player.face_right))
         )
-
 

@@ -28,10 +28,10 @@ class Engine:
         }
 
     def setup(self):
-        #self.seed = hash_string(input("Seed through console for now:"))
-        self.seed = hash_string("J")
         self.tile_data = classTileData.TileData()
-        self.tile_data.seed_gen(self.seed)
+        #self.seed = input("Seed through console for now:")
+        self.seed = "J"
+        self.next_map()
 
         self.player_data = classPlayerData.PlayerData()
         self.player_data.load_local_save()
@@ -74,6 +74,8 @@ class Engine:
     def next_map(self):
         self.seed = hash_string(self.seed)
         self.tile_data.seed_gen(self.seed)
+        self.enemy_list = self.tile_data.enemy_list
+        print(self.enemy_list)
 
     def player_move(self, x_offset=0, y_offset=0):
         if self.tile_data.floor_grid[self.player.row + x_offset][self.player.col]:

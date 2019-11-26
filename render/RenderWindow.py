@@ -9,7 +9,7 @@ import arcade
 SCREEN_WIDTH = 720
 SCREEN_HEIGHT = 720
 SCREEN_TITLE = "The Dungon" # mispelled on purpose
-GAME_SPEED = 1/30
+GAME_SPEED = 1/30 #30 fps
 
 class Display(arcade.Window):
 
