@@ -92,6 +92,15 @@ class TileData():
                 print(grid[row][col], end=" ")
             print("")
 
+    def return_coins(self):
+        sum = 0
+        for row in self.surface_grid:
+            for i in row:
+                if i == 1:
+                    sum += 1
+        return sum
+
+
 '''
 #Test
 world = TileData()
