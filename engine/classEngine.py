@@ -33,9 +33,13 @@ class Engine:
         self.tile_data = classTileData.TileData()
         self.tile_data.seed_gen(self.seed)
 
-        self.max_health_upgrades = 0
-        self.speed_upgrades = 0
         self.player_data = classPlayerData.PlayerData()
+        self.player_data.load_local_save()
+
+        self.max_health_upgrades = self.player_data.max_health_upgrades
+        self.speed_upgrades = self.player_data.max_speed_upgrades
+
+
         self.player = classPlayer.Player(self.max_health_upgrades, self.speed_upgrades)
 
         self.enemy_list = []
@@ -80,7 +84,6 @@ class Engine:
 
     def check_player_location(self):
         if self.tile_data.surface_grid[self.player.row][self.player.col]:
-
             func = self.switch.get(self.tile_data.surface_grid[self.player.row][self.player.col])
             self.tile_data.surface_grid[self.player.row][self.player.col] = 0
             func()
