@@ -20,7 +20,7 @@ class Enemy:
             for col in self.moves:
                 if not floor_grid[self.row + row][self.col + col]:
                     self.open_moves.append([self.row + row,self.col +col])
-        next_move = self.open_moves[random.randint(range(len(self.open_moves)))]
+        next_move = self.open_moves[random.randint(0,len(self.open_moves))]
         self.set_pos(next_move[0], next_move[1])
 
     def kill(self):

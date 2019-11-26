@@ -114,7 +114,7 @@ class Engine:
     def enemy_movement(self):
         for enemy in self.enemy_list:
             if not self.enemy_attack(enemy):
-                enemy.move()
+                enemy.move(self.tile_data.floor_grid)
 
     def enemy_attack(self, enemy):
         for row in enemy.moves:
