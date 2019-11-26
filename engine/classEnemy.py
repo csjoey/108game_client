@@ -6,13 +6,14 @@ class Enemy:
     def __init__(self):
         self.row = None
         self.col = None
+        self.dead = 0
         self.open_moves = []
 
     def set_pos(self, row, col):
         self.row = row
         self.col = col
 
-    def move(self,floor_grid):
+    def move(self, floor_grid):
         self.open_moves = []
         moves = [-1,1]
         for row in moves:
@@ -22,10 +23,8 @@ class Enemy:
         next_move = self.open_moves[random.randint(range(len(self.open_moves)))]
         self.set_pos(next_move[0], next_move[1])
 
-
-
-
-
+    def kill(self):
+        self.dead = 1
 
     def update(self, player):
         pass
