@@ -17,7 +17,7 @@ class Engine:
 
     def setup(self):
         #self.seed = hash_string(input("Seed through console for now:"))
-        self.seed = hash_string("s")
+        self.seed = hash_string("J")
         self.tile_data = classTileData.TileData()
         self.tile_data.seed_gen(self.seed)
 
@@ -30,6 +30,9 @@ class Engine:
         pass
 
     def keypress(self,key):
+        if key == arcade.key.SPACE:
+            self.next_map()
+
         if key == arcade.key.W:
             self.player_move(0, 1)
 
@@ -53,7 +56,6 @@ class Engine:
         if self.tile_data.floor_grid[self.player.row][self.player.col + y_offset]:
             self.player.move(self.player.row, self.player.col + y_offset)
 
-        print(self.player.row, self.player.col, sep=",")
 
 # Locally global functions
 def hash_string(str_obj):

@@ -19,7 +19,7 @@ class Display(arcade.Window):
         """
 
         # Setup Window
-        super().__init__(width, height, title)
+        super().__init__(width, height, title, update_rate=GAME_SPEED)
         arcade.set_background_color(arcade.color.AMAZON)
 
         # Setup display stages
@@ -76,7 +76,6 @@ class Display(arcade.Window):
         """
         Called whenever the user lets off a previously pressed key.
         """
-        self.game_render.engine.next_map()
         pass
 
     def on_mouse_motion(self, x, y, delta_x, delta_y):

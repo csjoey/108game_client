@@ -50,7 +50,7 @@ class TileData():
         Begin population of the surface map based on game seed
         No real rules, just psuedo-randomness to a max number of items based on hex->int
         """
-        max_items = 10
+        max_items = 8
         items = int(seed[0:4], 16) % max_items  # Get num of items to render based on sha
         print("---")
         for str_pos in range(items + 1):
@@ -59,7 +59,6 @@ class TileData():
             row = (int(seed[str_pos*4:str_pos*4+5], 16) % 13) + 2
             col = (int(seed[str_pos*4+1:str_pos*4+6], 16) % 13) + 2
             item = int(seed[str_pos*4+2:str_pos*4+7], 16) % 6
-            print("Item {} at {},{}".format(self.obj_dict[item], row, col))
             self.surface_grid[row][col] = item
         print("---")
 

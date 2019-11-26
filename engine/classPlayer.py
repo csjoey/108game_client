@@ -7,7 +7,7 @@ class Player():
         self.move_delay = 60 - speed_upgrades*5
         self.dead = 0
 
-    # Note origin is right,up
+    # Note origin is bottom left
     def move(self, new_row, new_col):
         self.row = new_row
         self.col = new_col
