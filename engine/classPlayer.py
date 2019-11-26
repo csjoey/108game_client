@@ -9,11 +9,20 @@ class Player():
         self.coins = 0
         self.face_right = True
         self.draw_sword = False
+        self.tick = None
 
     # Note origin is bottom left
     def move(self, new_row, new_col):
         self.row = new_row
         self.col = new_col
+
+    def sword_ticker(self):
+        if self.draw_sword:
+            self.tick -= 1
+        else:
+            self.tick = 10
+        if self.tick == 0:
+            self.draw_sword = False
 
     def lose_health(self):
         if self.health > 0:

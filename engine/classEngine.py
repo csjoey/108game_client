@@ -34,12 +34,8 @@ class Engine:
 
     def update(self):
         self.check_player_location()
-        if self.player.draw_sword:
-            self.tick -= 1
-        else:
-            self.tick = 10
-        if self.tick == 0:
-            self.player.draw_sword = False
+        self.player.sword_ticker()
+
 
     def keypress(self,key):
         if key == arcade.key.SPACE:
