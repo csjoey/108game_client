@@ -54,12 +54,12 @@ class Engine:
 
         self.enemy_list = []
 
-        self.sound_all_coins = arcade.sound.load_sound("res/sounds/allcoins.mp3")
-        self.sound_coin = arcade.sound.load_sound("res/sounds/coin.mp3")
-        self.sound_attack = arcade.sound.load_sound("res/sounds/hit.mp3")
-        self.sound_hurt = arcade.sound.load_sound("res/sounds/hurt.mp3")
-        self.next_stage = arcade.sound.load_sound("res/sounds/nextstage.mp3")
-        self.sound_upgrade = arcade.sound.load_sound("res/sounds/upgrade.mp3")
+        self.sound_all_coins = arcade.sound.load_sound("res/sounds/allcoins.wav")
+        self.sound_coin = arcade.sound.load_sound("res/sounds/coin.wav")
+        self.sound_attack = arcade.sound.load_sound("res/sounds/hit.wav")
+        self.sound_hurt = arcade.sound.load_sound("res/sounds/hurt.wav")
+        self.next_stage = arcade.sound.load_sound("res/sounds/nextstage.wav")
+        self.sound_upgrade = arcade.sound.load_sound("res/sounds/upgrade.wav")
 
 
     def update(self):
