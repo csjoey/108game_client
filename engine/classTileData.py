@@ -60,6 +60,7 @@ class TileData():
             col = (int(seed[str_pos*4+1:str_pos*4+6], 16) % 13) + 2
             item = int(seed[str_pos*4+2:str_pos*4+7], 16) % 6
             self.surface_grid[row][col] = item
+            print("{},{} : {}".format(row,col, self.obj_dict[item]))
         print("---")
 
     def if_collide(self, row, col):
