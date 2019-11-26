@@ -6,6 +6,7 @@ class Player():
         self.max_health = 3 + max_health_upgrades
         self.move_delay = 60 - speed_upgrades*5
         self.dead = 0
+        self.coins = 0
 
     # Note origin is bottom left
     def move(self, new_row, new_col):

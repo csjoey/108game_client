@@ -4,3 +4,4 @@ if __name__ == '__main__':
 
 
 # Sounds thanks to Little Robot Sound Factory, at www.littlerobotsoundfactory.com
+# Sprites thanks to Robert, at https://0x72.itch.io/dungeontileset-ii

@@ -15,19 +15,24 @@ class Engine:
         self.player = None
         self.player_data = None
 
+        self.max_health_upgrades = None
+        self.speed_upgrades = None
+
     def setup(self):
         #self.seed = hash_string(input("Seed through console for now:"))
         self.seed = hash_string("J")
         self.tile_data = classTileData.TileData()
         self.tile_data.seed_gen(self.seed)
 
+        self.max_health_upgrades = 0
+        self.speed_upgrades = 0
         self.player_data = classPlayerData.PlayerData()
-        self.player = classPlayer.Player(0,0)
+        self.player = classPlayer.Player(self.max_health_upgrades, self.speed_upgrades)
 
         self.enemy_list = []
 
     def update(self):
-        pass
+        self.check_player_location()
 
     def keypress(self,key):
         if key == arcade.key.SPACE:
@@ -56,8 +61,39 @@ class Engine:
         if self.tile_data.floor_grid[self.player.row][self.player.col + y_offset]:
             self.player.move(self.player.row, self.player.col + y_offset)
 
+    def check_player_location(self):
+        if self.tile_data.surface_grid[self.player.row][self.player.col]:
+            switch = {
+                1:self.coin_pickup,
+                2:self.heart_pickup,
+                3:self.max_health_pickup,
+                4:self.speed_pickup,
+                5:self.enemy_spawn
+            }
+            func = switch.get(self.tile_data.surface_grid[self.player.row][self.player.col])
+            self.tile_data.surface_grid[self.player.row][self.player.col] = 0
+            func()
+
+    def coin_pickup(self):
+        self.player.coins += 1
+
+    def heart_pickup(self):
+        self.player.gain_health()
+
+    def max_health_pickup(self):
+        self.player.max_health_up()
+        self.max_health_upgrades += 1
+
+    def speed_pickup(self):
+        self.player.speed_up()
+        self.speed_upgrades += 1
+
+    def enemy_spawn(self):
+        return None
+
 
 # Locally global functions
 def hash_string(str_obj):
     return hashlib.sha256(str_obj.encode()).hexdigest()
+
 
