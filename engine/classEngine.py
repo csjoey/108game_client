@@ -5,6 +5,7 @@ from engine import classPlayer
 import hashlib
 import arcade
 
+
 class Engine:
 
     def __init__(self):
@@ -18,6 +19,7 @@ class Engine:
         self.max_health_upgrades = None
         self.speed_upgrades = None
         self.tick = None
+        self.total_coins = None
 
         self.switch = {
             1: self.coin_pickup,
@@ -26,6 +28,13 @@ class Engine:
             4: self.speed_pickup,
             5: self.enemy_spawn
         }
+
+        self.sound_all_coins = None
+        self.sound_coin = None
+        self.sound_attack = None
+        self.sound_hurt = None
+        self.next_stage = None
+        self.sound_upgrade = None
 
     def setup(self):
         #self.seed = hash_string(input("Seed through console for now:"))
@@ -38,14 +47,24 @@ class Engine:
 
         self.max_health_upgrades = self.player_data.max_health_upgrades
         self.speed_upgrades = self.player_data.max_speed_upgrades
-
+        self.total_coins = self.tile_data.return_coins()
 
         self.player = classPlayer.Player(self.max_health_upgrades, self.speed_upgrades)
 
         self.enemy_list = []
 
+        self.sound_all_coins = arcade.sound.load_sound("res/sounds/allcoins.mp3")
+        self.sound_coin = arcade.sound.load_sound("res/sounds/coin.mp3")
+        self.sound_attack = arcade.sound.load_sound("res/sounds/hit.mp3")
+        self.sound_hurt = arcade.sound.load_sound("res/sounds/hurt.mp3")
+        self.next_stage = arcade.sound.load_sound("res/sounds/nextstage.mp3")
+        self.sound_upgrade = arcade.sound.load_sound("res/sounds/upgrade.mp3")
+
+
     def update(self):
         self.check_player_location()
+        if len(self.enemy_list):
+            self.enemy_movement()
         self.player.sword_ticker()
         if self.player.draw_sword:
             self.sword_collide()
@@ -89,19 +108,42 @@ class Engine:
             self.tile_data.surface_grid[self.player.row][self.player.col] = 0
             func()
 
+    def enemy_movement(self):
+        for enemy in self.enemy_list:
+            if not self.enemy_attack(enemy):
+                enemy.move()
+
+    def enemy_attack(self, enemy):
+        for row in enemy.moves:
+            for col in enemy.moves:
+                if (self.player.row == enemy.row + row) and (self.player.col == enemy.col + col):
+                    self.player.lose_health()
+                    arcade.sound.play_sound(self.sound_hurt)
+                    return True
+
     def coin_pickup(self):
+        arcade.sound.play_sound(self.sound_coin)
         self.player.coins += 1
+        if self.player.coins == self.total_coins:
+            arcade.sound.play_sound(self.sound_all_coins)
+            self.stage_done()
 
     def heart_pickup(self):
         self.player.gain_health()
+        arcade.sound.play_sound(self.sound_upgrade)
 
     def max_health_pickup(self):
         self.player.max_health_up()
         self.max_health_upgrades += 1
+        arcade.sound.play_sound(self.sound_upgrade)
 
     def speed_pickup(self):
         self.player.speed_up()
         self.speed_upgrades += 1
+        arcade.sound.play_sound(self.sound_upgrade)
+
+    def stage_done(self):
+        pass
 
     def enemy_spawn(self):
         return None
@@ -113,6 +155,7 @@ class Engine:
         for enemy in self.enemy_list:
             if enemy.row == (self.player.row - 1 + (2 * self.player.face_right)) and enemy.col == self.player.col:
                 enemy.kill()
+                arcade.sound.play_sound(self.sound_attack)
 
 # Locally global functions
 def hash_string(str_obj):
