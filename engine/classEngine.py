@@ -51,6 +51,7 @@ class Engine:
             self.sword_collide()
 
     def keypress(self,key):
+        self.player.draw_sword = False
         if key == arcade.key.SPACE:
             self.next_map()
 
