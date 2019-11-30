@@ -29,6 +29,10 @@ class GameRender:
         self.texture_enemy = None
         self.texture_sword = None
 
+        # Ui textures
+        self.texture_ui_heart_empty = None
+        self.texture_ui_heart_full = None
+
         # Texture Dicts
         self.bg_textures = None
         self.fg_textures = None
@@ -38,6 +42,9 @@ class GameRender:
     def setup(self):
         self.engine = classEngine.Engine()
         self.engine.setup()
+
+        self.texture_ui_heart_full = arcade.load_texture("res/images/ui_heart_full.png",height=16, width=16)
+        self.texture_ui_heart_empty = arcade.load_texture("res/images/ui_heart_empty.png", height=16, width=16)
 
         self.texture_player = [arcade.load_texture("res/images/knight_f_idle_anim_f1.png", mirrored=True),
                                arcade.load_texture("res/images/knight_f_idle_anim_f1.png")
@@ -77,6 +84,7 @@ class GameRender:
         self.draw_fg()
         self.draw_player()
         self.draw_enemies()
+        self.draw_ui()
         if self.engine.player.draw_sword:
             self.draw_sword()
         arcade.draw_text("DEBUG:GAME", 0, 0, arcade.color.WHITE)
@@ -140,6 +148,40 @@ class GameRender:
         )
 
     def draw_ui(self):
-        pass
+        for x in range(self.engine.player.max_health):
+            if x + 1 <= self.engine.player.health:
+                arcade.draw_texture_rectangle(
+                    x * 17 + 30,
+                    700,
+                    16,
+                    16,
+                    self.texture_ui_heart_full)
+            else:
+                arcade.draw_texture_rectangle(
+                    x * 17 + 30,
+                    700,
+                    16,
+                    16,
+                    self.texture_ui_heart_empty)
+
+        arcade.draw_texture_rectangle(
+            440,
+            697.5,
+            16,
+            16,
+            self.texture_coin
+        )
+
+        arcade.draw_text(
+            "x" + str(self.engine.player.coins),
+            450,
+            690,
+            arcade.color.WHITE,
+            15,
+            bold=True,
+            align="left"
+        )
+
+
 
 

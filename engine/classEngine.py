@@ -19,6 +19,7 @@ class Engine:
         self.max_health_upgrades = None
         self.speed_upgrades = None
         self.tick = None
+        self.room_coins = None
         self.total_coins = None
         self.from_direction = None
 
@@ -105,9 +106,8 @@ class Engine:
         self.seed = hash_string(self.seed)
         self.tile_data.seed_gen(self.seed, self.from_direction)
         self.enemy_list = self.tile_data.enemy_list
+        self.room_coins = 0
         self.total_coins = self.tile_data.return_coins()
-        if self.player:
-            self.player.coins = 0
 
     def player_move(self, x_offset=0, y_offset=0):
 
@@ -159,7 +159,8 @@ class Engine:
     def coin_pickup(self):
         arcade.sound.play_sound(self.sound_coin)
         self.player.coins += 1
-        if self.player.coins == self.total_coins:
+        self.room_coins += 1
+        if self.room_coins == self.total_coins:
             arcade.sound.play_sound(self.sound_all_coins)
             for row in self.exit_list:
                 for col in self.exit_list:

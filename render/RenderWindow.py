@@ -96,10 +96,6 @@ class Display(arcade.Window):
         """
         pass
 
-    def scheduled1(self,*args,**kwargs):
-        print("1 Second")
-#        self.game_render.engine.tile_data.seed_gen()
-
 
 def main():
     """ Main method """
