@@ -8,6 +8,7 @@ class TileData():
         self.floor_grid = []
         self.surface_grid = []
         self.tile_dict = {
+            -1: "spikes",
             0: "wall",
             1: "floor1",
             2: "floor2",
@@ -24,7 +25,7 @@ class TileData():
         }
 
 
-    def seed_gen(self, seed):
+    def seed_gen(self, seed, from_direction = 3):
         """
         Uses seed to randomly generate floor grid and surface grid
         :return:
@@ -42,11 +43,28 @@ class TileData():
                 if (row == 0 or row == 15) or (col == 0 or col == 15):
                     self.surface_grid[row].append(0)
                     if (row == 7 or row == 8) or (col == 7 or col == 8):
-                        self.floor_grid[row].append(1)
+                        self.floor_grid[row].append(-1)
                     else:
                         self.floor_grid[row].append(0)
                 else:
                     self.floor_grid[row].append(1)
+
+        if from_direction == 1:
+            self.floor_grid[7][15] = 0
+            self.floor_grid[8][15] = 0
+
+        if from_direction == 2:
+            self.floor_grid[15][7] = 0
+            self.floor_grid[15][8] = 0
+
+        if from_direction == 3:
+            self.floor_grid[7][0] = 0
+            self.floor_grid[8][0] = 0
+
+        if from_direction == 4:
+            self.floor_grid[0][7] = 0
+            self.floor_grid[0][8] = 0
+
 
         """
         Begin population of the surface map based on game seed
@@ -54,7 +72,6 @@ class TileData():
         """
         max_items = 8
         items = int(seed[0:4], 16) % max_items  # Get num of items to render based on sha
-        print("---")
         self.enemy_list = []
         for str_pos in range(items + 1):
             # Get item positions and values based on sha string
@@ -64,11 +81,9 @@ class TileData():
             item = int(seed[str_pos*4+2:str_pos*4+7], 16) % 6
             self.surface_grid[row][col] = item
 
+
             if item == 5:
                 self.enemy_list.append(classEnemy.Enemy(row, col))
-
-            print("{},{} : {}".format(row,col, self.obj_dict[item]))
-        print("---")
 
     def if_collide(self, row, col):
         """

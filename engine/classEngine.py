@@ -20,6 +20,7 @@ class Engine:
         self.speed_upgrades = None
         self.tick = None
         self.total_coins = None
+        self.from_direction = None
 
         self.switch = {
             1: self.coin_pickup,
@@ -36,6 +37,8 @@ class Engine:
         self.next_stage = None
         self.sound_upgrade = None
 
+        self.tick = None
+
     def setup(self):
         self.tile_data = classTileData.TileData()
         #self.seed = input("Seed through console for now:")
@@ -49,6 +52,7 @@ class Engine:
         self.speed_upgrades = self.player_data.max_speed_upgrades
         self.total_coins = self.tile_data.return_coins()
         self.tick = 60
+        self.from_direction = 0
 
         self.player = classPlayer.Player(self.max_health_upgrades, self.speed_upgrades)
 
@@ -84,23 +88,28 @@ class Engine:
 
         if key == arcade.key.A:
             self.player_move(-1, 0)
-            self.player.face_right = False
+            self.player.face_right = 0
 
         if key == arcade.key.S:
             self.player_move(0, -1)
 
         if key == arcade.key.D:
             self.player_move(1, 0)
-            self.player.face_right = True
+            self.player.face_right = 1
 
         if key == arcade.key.ENTER:
             self.attack()
 
     def next_map(self):
+
+
+
         self.seed = hash_string(self.seed)
         self.tile_data.seed_gen(self.seed)
         self.enemy_list = self.tile_data.enemy_list
-        print(self.enemy_list)
+        self.total_coins = self.tile_data.return_coins()
+        if self.player:
+            self.player.coins = 0
 
     def player_move(self, x_offset=0, y_offset=0):
         if self.tile_data.floor_grid[self.player.row + x_offset][self.player.col]:
@@ -153,16 +162,21 @@ class Engine:
         pass
 
     def enemy_spawn(self):
-        return None
+        pass
 
     def attack(self):
         self.player.draw_sword = True
 
     def sword_collide(self):
+        new_list = []
         for enemy in self.enemy_list:
             if enemy.row == (self.player.row - 1 + (2 * self.player.face_right)) and enemy.col == self.player.col:
                 enemy.kill()
                 arcade.sound.play_sound(self.sound_attack)
+            if not enemy.dead:
+                new_list.append(enemy)
+        self.enemy_list = new_list
+
 
 # Locally global functions
 def hash_string(str_obj):

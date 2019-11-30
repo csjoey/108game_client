@@ -94,7 +94,7 @@ class GameRender:
                     col*45+22.5,
                     45,
                     45,
-                    self.bg_textures[self.engine.tile_data.floor_grid[15-row][15-col]]
+                    self.bg_textures[self.engine.tile_data.floor_grid[row][col]]
                 )
 
     def draw_fg(self):

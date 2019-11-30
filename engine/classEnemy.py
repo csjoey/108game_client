@@ -16,12 +16,14 @@ class Enemy:
 
     def move(self, floor_grid):
         self.open_moves = []
+        if self.row == 15:
+            pass
         for row in self.moves:
             for col in self.moves:
                 if floor_grid[self.row + row][self.col + col]:
                     self.open_moves.append([self.row + row,self.col + col])
         print("moves: ", self.open_moves)
-        next_move = self.open_moves[random.randint(0,len(self.open_moves) - 1)]
+        next_move = self.open_moves[random.randint(0, len(self.open_moves) - 1)]
         self.set_pos(next_move[0], next_move[1])
 
     def kill(self):
