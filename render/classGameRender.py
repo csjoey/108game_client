@@ -1,11 +1,13 @@
 import arcade
 from engine import classEngine
+from render import classMenuRender
 
 class GameRender:
 
     def __init__(self):
         # Engine
         self.engine = None
+        self.next_stage = None
 
         # Map sprite list
         self.map_sprites = None
@@ -91,6 +93,8 @@ class GameRender:
 
     def update(self):
         self.engine.update()
+        if self.engine.next_stage:
+            self.next_stage = classMenuRender.MenuRender
 
     def keypress(self, key):
         self.engine.keypress(key)

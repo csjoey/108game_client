@@ -31,25 +31,27 @@ class Engine:
             5: self.enemy_spawn
         }
 
+        self.sound_theme = None
         self.sound_all_coins = None
         self.sound_coin = None
         self.sound_attack = None
         self.sound_hurt = None
-        self.next_stage = None
         self.sound_upgrade = None
 
+        self.next_stage = None
         self.tick = None
         self.exit_list = [0,7,8,15]
 
     def setup(self):
         self.from_direction = 0
         self.tile_data = classTileData.TileData()
-        #self.seed = input("Seed through console for now:")
-        self.seed = "J"
-        self.next_map()
+        # self.seed = input("Seed through console for now:")
 
         self.player_data = classPlayerData.PlayerData()
         self.player_data.load_local_save()
+
+        self.seed = self.player_data.seed
+        self.next_map()
 
         self.max_health_upgrades = self.player_data.max_health_upgrades
         self.speed_upgrades = self.player_data.max_speed_upgrades
@@ -60,13 +62,13 @@ class Engine:
 
         self.enemy_list = []
 
-        self.sound_all_coins = arcade.sound.load_sound("res/sounds/allcoins.wav")
+        self.sound_theme = arcade.load_sound("res/sounds/game_music.wav")
+        self.sound_all_coins = arcade.sound.load_sound("res/sounds/nextstage.wav")
         self.sound_coin = arcade.sound.load_sound("res/sounds/coin.wav")
         self.sound_attack = arcade.sound.load_sound("res/sounds/hit.wav")
         self.sound_hurt = arcade.sound.load_sound("res/sounds/hurt.wav")
-        self.next_stage = arcade.sound.load_sound("res/sounds/nextstage.wav")
         self.sound_upgrade = arcade.sound.load_sound("res/sounds/upgrade.wav")
-
+        arcade.play_sound(self.sound_theme)
 
     def update(self):
         self.check_player_location()
@@ -153,6 +155,8 @@ class Engine:
             for col in enemy.moves:
                 if (self.player.row == enemy.row + row) and (self.player.col == enemy.col + col):
                     self.player.lose_health()
+                    if self.player.health < 1:
+                        self.end_game()
                     arcade.sound.play_sound(self.sound_hurt)
                     return True
 
@@ -184,11 +188,21 @@ class Engine:
         self.speed_upgrades += 1
         arcade.sound.play_sound(self.sound_upgrade)
 
+    def enemy_spawn(self):
+        pass
+
     def stage_done(self):
         pass
 
-    def enemy_spawn(self):
-        pass
+    def end_game(self):
+        arcade.stop_sound(self.sound_theme)
+        self.player_data.seed = self.seed
+        self.player_data.max_speed_upgrades = self.speed_upgrades
+        self.player_data.max_health_upgrades = self.max_health_upgrades
+        self.player_data.coins += self.player.coins
+        self.player_data.playtime = 1
+        self.player_data.save_local_save()
+        self.next_stage = True
 
     def attack(self):
         self.player.draw_sword = True
