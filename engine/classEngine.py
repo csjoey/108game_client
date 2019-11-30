@@ -38,8 +38,10 @@ class Engine:
         self.sound_upgrade = None
 
         self.tick = None
+        self.exit_list = [0,7,8,15]
 
     def setup(self):
+        self.from_direction = 0
         self.tile_data = classTileData.TileData()
         #self.seed = input("Seed through console for now:")
         self.seed = "J"
@@ -52,7 +54,6 @@ class Engine:
         self.speed_upgrades = self.player_data.max_speed_upgrades
         self.total_coins = self.tile_data.return_coins()
         self.tick = 60
-        self.from_direction = 0
 
         self.player = classPlayer.Player(self.max_health_upgrades, self.speed_upgrades)
 
@@ -101,22 +102,40 @@ class Engine:
             self.attack()
 
     def next_map(self):
-
-
-
         self.seed = hash_string(self.seed)
-        self.tile_data.seed_gen(self.seed)
+        self.tile_data.seed_gen(self.seed, self.from_direction)
         self.enemy_list = self.tile_data.enemy_list
         self.total_coins = self.tile_data.return_coins()
         if self.player:
             self.player.coins = 0
 
     def player_move(self, x_offset=0, y_offset=0):
-        if self.tile_data.floor_grid[self.player.row + x_offset][self.player.col]:
+
+        if self.tile_data.floor_grid[self.player.row + x_offset][self.player.col] > 0:
             self.player.move(self.player.row + x_offset, self.player.col)
 
-        if self.tile_data.floor_grid[self.player.row][self.player.col + y_offset]:
+        if self.tile_data.floor_grid[self.player.row][self.player.col + y_offset] > 0:
             self.player.move(self.player.row, self.player.col + y_offset)
+
+        if self.player.col == 15:
+            self.from_direction = 3
+            self.player.col = 1
+            self.next_map()
+
+        if self.player.row == 15:
+            self.from_direction = 4
+            self.player.row = 1
+            self.next_map()
+
+        if self.player.col == 0:
+            self.from_direction = 1
+            self.player.col = 14
+            self.next_map()
+
+        if self.player.row == 0:
+            self.from_direction = 2
+            self.player.row = 14
+            self.next_map()
 
     def check_player_location(self):
         if self.tile_data.surface_grid[self.player.row][self.player.col]:
@@ -142,7 +161,13 @@ class Engine:
         self.player.coins += 1
         if self.player.coins == self.total_coins:
             arcade.sound.play_sound(self.sound_all_coins)
-            self.stage_done()
+            for row in self.exit_list:
+                for col in self.exit_list:
+                    if self.tile_data.floor_grid[row][col] == -1:
+                        self.tile_data.floor_grid[row][col] = 1
+
+
+
 
     def heart_pickup(self):
         self.player.gain_health()

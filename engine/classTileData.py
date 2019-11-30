@@ -85,6 +85,10 @@ class TileData():
             if item == 5:
                 self.enemy_list.append(classEnemy.Enemy(row, col))
 
+        g_row = (int(seed[str_pos*4:str_pos*4+5], 16) % 13) + 2
+        g_col = (int(seed[str_pos*4:str_pos*4+3], 16) % 13) + 2
+        self.surface_grid[g_row][g_col] = 1
+
     def if_collide(self, row, col):
         """
         checks if tile has collision

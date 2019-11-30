@@ -39,8 +39,9 @@ class GameRender:
         self.engine = classEngine.Engine()
         self.engine.setup()
 
-        self.texture_player_right = arcade.load_texture("res/images/knight_f_idle_anim_f1.png")
-        self.texture_player_left = arcade.load_texture("res/images/knight_f_idle_anim_f1.png", mirrored=True)
+        self.texture_player = [arcade.load_texture("res/images/knight_f_idle_anim_f1.png", mirrored=True),
+                               arcade.load_texture("res/images/knight_f_idle_anim_f1.png")
+                               ]
         self.texture_coin = arcade.load_texture("res/images/coin_anim_f0.png")
         self.texture_upgrade_speed = arcade.load_texture("res/images/flask_big_blue.png")
         self.texture_upgrade_maxhealth = arcade.load_texture("res/images/flask_big_red.png")
@@ -110,16 +111,12 @@ class GameRender:
                     )
 
     def draw_player(self):
-        if self.engine.player.face_right:
-            texture = self.texture_player_right
-        else:
-            texture = self.texture_player_left
         arcade.draw_texture_rectangle(
             self.engine.player.row * 45 + 22.5,
             self.engine.player.col * 45 + 22.5,
             45,
             45,
-            texture
+            self.texture_player[self.engine.player.face_right]
         )
 
     def draw_enemies(self):
@@ -141,4 +138,8 @@ class GameRender:
             self.texture_sword,
             (90 + (180 * self.engine.player.face_right))
         )
+
+    def draw_ui(self):
+        pass
+
 
