@@ -26,6 +26,9 @@ class Enemy:
         next_move = self.open_moves[random.randint(0, len(self.open_moves) - 1)]
         self.set_pos(next_move[0], next_move[1])
 
+    def get_pos(self):
+        return (self.row, self.col)
+
     def kill(self):
         self.dead = 1
 

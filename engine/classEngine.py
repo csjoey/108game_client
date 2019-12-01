@@ -13,6 +13,7 @@ class Engine:
         self.tile_data = None
 
         self.enemy_list = None
+        self.enemy_locations = None
         self.player = None
         self.player_data = None
 
@@ -75,7 +76,7 @@ class Engine:
         if len(self.enemy_list):
             if self.tick < 1:
                 self.enemy_movement()
-                self.tick = 60
+                self.tick = 30
             else:
                 self.tick -= 1
         self.player.sword_ticker()
@@ -108,16 +109,20 @@ class Engine:
         self.seed = hash_string(self.seed)
         self.tile_data.seed_gen(self.seed, self.from_direction)
         self.enemy_list = self.tile_data.enemy_list
+        self.enemy_locations = []
+        for enemy in self.enemy_list:
+            self.enemy_locations.append(enemy.get_pos())
         self.room_coins = 0
         self.total_coins = self.tile_data.return_coins()
 
     def player_move(self, x_offset=0, y_offset=0):
-
         if self.tile_data.floor_grid[self.player.row + x_offset][self.player.col] > 0:
-            self.player.move(self.player.row + x_offset, self.player.col)
+            if not ((self.player.row + x_offset, self.player.col) in self.enemy_locations):
+                self.player.move(self.player.row + x_offset, self.player.col)
 
         if self.tile_data.floor_grid[self.player.row][self.player.col + y_offset] > 0:
-            self.player.move(self.player.row, self.player.col + y_offset)
+            if not ((self.player.row + x_offset, self.player.col) in self.enemy_locations):
+                self.player.move(self.player.row, self.player.col + y_offset)
 
         if self.player.col == 15:
             self.from_direction = 3
@@ -146,9 +151,12 @@ class Engine:
             func()
 
     def enemy_movement(self):
+        self.enemy_locations = []
+
         for enemy in self.enemy_list:
             if not self.enemy_attack(enemy):
                 enemy.move(self.tile_data.floor_grid)
+            self.enemy_locations.append(enemy.get_pos())
 
     def enemy_attack(self, enemy):
         for row in enemy.moves:
@@ -209,9 +217,11 @@ class Engine:
 
     def sword_collide(self):
         new_list = []
+        self.enemy_locations = []
         for enemy in self.enemy_list:
             if enemy.row == (self.player.row - 1 + (2 * self.player.face_right)) and enemy.col == self.player.col:
                 enemy.kill()
+                self.enemy_locations.append(enemy.get_pos())
                 arcade.sound.play_sound(self.sound_attack)
             if not enemy.dead:
                 new_list.append(enemy)
