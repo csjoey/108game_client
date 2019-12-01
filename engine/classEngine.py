@@ -19,7 +19,6 @@ class Engine:
 
         self.max_health_upgrades = None
         self.speed_upgrades = None
-        self.tick = None
         self.room_coins = None
         self.total_coins = None
         self.from_direction = None
@@ -79,18 +78,18 @@ class Engine:
 
     def update(self):
         self.check_player_location()
-        if len(self.enemy_list):
-            if self.tick < 1:
-                self.enemy_movement()
-                self.tick = 30
-            else:
-                self.tick -= 1
+
         self.player.sword_ticker()
+
         if self.player.draw_sword:
             self.sword_collide()
+
         if self.game_tick > 0:
             self.game_tick -= 1
+
         if self.game_tick == 0:
+            if len(self.enemy_list):
+                self.enemy_movement()
             self.game_tick = 30
             self.game_timer -= 1
 
