@@ -25,7 +25,6 @@ class Display(arcade.Window):
 
         # Setup display stages
         self.display_stage = None
-        self.last_key = None
 
 
 

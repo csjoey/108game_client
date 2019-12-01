@@ -1,4 +1,12 @@
 #108game_client
+#Enter the Dungon
+    Yes it's spelled that way on purpose.
+    Enter the dungon is a proceedurally genrated dungeon crawler which you provide the
+    inital input for. To play the game, use WASD to move around and enter to attack. Watch out
+    for enemies who will attack you if you're next to them, but hit them once and theyll drop a heart.
+    in order to progress to the next room, you must collect all the coins, but watch out! if you run out of time 
+    displayed in the top right corner, or health displayed in the top left, the game ends.
+
 ## Special Thanks
     Sprites
     Robert, at https://0x72.itch.io/dungeontileset-ii

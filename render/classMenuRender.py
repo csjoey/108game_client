@@ -5,10 +5,13 @@ class MenuRender:
 
     def __init__(self):
         self.next_stage = None
+
         self.texture_sword = None
         self.texture_wall = None
+
         self.selected = None
         self.selected_functions = None
+
         self.player_data = None
 
     def setup(self):
