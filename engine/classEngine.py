@@ -39,7 +39,6 @@ class Engine:
         self.sound_upgrade = None
 
         self.next_stage = None
-        self.tick = None
         self.exit_list = [0,7,8,15]
         self.game_timer = None
         self.game_tick = None
@@ -84,14 +83,15 @@ class Engine:
         if self.player.draw_sword:
             self.sword_collide()
 
-        if self.game_tick > 0:
-            self.game_tick -= 1
-
         if self.game_tick == 0:
             if len(self.enemy_list):
                 self.enemy_movement()
             self.game_tick = 30
             self.game_timer -= 1
+            if self.game_timer <= 0:
+                self.end_game()
+        else:
+            self.game_tick -= 1
 
     def keypress(self,key):
         self.player.draw_sword = False
@@ -224,7 +224,7 @@ class Engine:
         pass
 
     def end_game(self):
-        arcade.stop_sound(self.sound_theme)
+        #arcade.pause(self.sound_theme)
         self.player_data.seed = self.seed
         self.player_data.max_speed_upgrades = self.speed_upgrades
         self.player_data.max_health_upgrades = self.max_health_upgrades
