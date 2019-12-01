@@ -44,6 +44,7 @@ class Engine:
         self.exit_list = [0,7,8,15]
         self.game_timer = None
         self.game_tick = None
+        self.score = None
 
     def setup(self):
         self.from_direction = 0
@@ -74,6 +75,7 @@ class Engine:
 
         self.game_tick = 30
         self.game_timer = 10
+        self.score = 0
 
     def update(self):
         self.check_player_location()
@@ -138,24 +140,28 @@ class Engine:
             self.player.col = 1
             self.next_map()
             self.game_timer += 3
+            self.score += 1
 
         if self.player.row == 15:
             self.from_direction = 4
             self.player.row = 1
             self.next_map()
             self.game_timer += 3
+            self.score += 1
 
         if self.player.col == 0:
             self.from_direction = 1
             self.player.col = 14
             self.next_map()
             self.game_timer += 3
+            self.score += 1
 
         if self.player.row == 0:
             self.from_direction = 2
             self.player.row = 14
             self.next_map()
             self.game_timer += 3
+            self.score += 1
 
     def check_player_location(self):
         if self.tile_data.surface_grid[self.player.row][self.player.col]:
@@ -192,8 +198,11 @@ class Engine:
                     if self.tile_data.floor_grid[row][col] == -1:
                         self.tile_data.floor_grid[row][col] = 1
 
+    def get_score(self):
+        return self.score
 
-
+    def get_time(self):
+        return self.game_timer
 
     def heart_pickup(self):
         self.player.gain_health()

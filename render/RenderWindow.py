@@ -1,6 +1,7 @@
 from render import classGameRender
 from render import classLoginRender
 from render import classMenuRender
+from render import classGameOverRender
 import arcade
 
 
@@ -24,6 +25,8 @@ class Display(arcade.Window):
 
         # Setup display stages
         self.display_stage = None
+        self.game_over = None
+        self.score = None
 
     def setup(self):
         """
@@ -33,6 +36,7 @@ class Display(arcade.Window):
         #self.display_stage = classGameRender.GameRender()
         self.display_stage = classMenuRender.MenuRender()
         self.display_stage.setup()
+        self.game_over = False
 
     def on_draw(self):
         """
@@ -48,11 +52,15 @@ class Display(arcade.Window):
         """
        Game update logic
         """
-        if self.display_stage.next_stage:
+        if self.display_stage.next_stage and not self.game_over:
             self.display_stage = self.display_stage.next_stage()
             self.display_stage.setup()
         else:
             self.display_stage.update()
+        if self.game_over:
+            self.score = self.display_stage.get_score()
+            self.display_stage = classGameOverRender.GameOverRender()
+            self.display_stage.setup(self.score)
 
     def on_key_press(self, key, key_modifiers):
         """
