@@ -186,6 +186,11 @@ class GameRender:
             align="left"
         )
 
-
-
-
+        arcade.draw_text(
+            str(self.engine.game_timer),
+            690,
+            690,
+            arcade.color.WHITE,
+            16,
+            bold=True
+        )

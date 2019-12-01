@@ -42,6 +42,8 @@ class Engine:
         self.next_stage = None
         self.tick = None
         self.exit_list = [0,7,8,15]
+        self.game_timer = None
+        self.game_tick = None
 
     def setup(self):
         self.from_direction = 0
@@ -57,7 +59,6 @@ class Engine:
         self.max_health_upgrades = self.player_data.max_health_upgrades
         self.speed_upgrades = self.player_data.max_speed_upgrades
         self.total_coins = self.tile_data.return_coins()
-        self.tick = 60
 
         self.player = classPlayer.Player(self.max_health_upgrades, self.speed_upgrades)
 
@@ -71,6 +72,9 @@ class Engine:
         self.sound_upgrade = arcade.sound.load_sound("res/sounds/upgrade.wav")
         arcade.play_sound(self.sound_theme)
 
+        self.game_tick = 30
+        self.game_timer = 10
+
     def update(self):
         self.check_player_location()
         if len(self.enemy_list):
@@ -82,6 +86,11 @@ class Engine:
         self.player.sword_ticker()
         if self.player.draw_sword:
             self.sword_collide()
+        if self.game_tick > 0:
+            self.game_tick -= 1
+        if self.game_tick == 0:
+            self.game_tick = 30
+            self.game_timer -= 1
 
     def keypress(self,key):
         self.player.draw_sword = False
@@ -128,21 +137,25 @@ class Engine:
             self.from_direction = 3
             self.player.col = 1
             self.next_map()
+            self.game_timer += 3
 
         if self.player.row == 15:
             self.from_direction = 4
             self.player.row = 1
             self.next_map()
+            self.game_timer += 3
 
         if self.player.col == 0:
             self.from_direction = 1
             self.player.col = 14
             self.next_map()
+            self.game_timer += 3
 
         if self.player.row == 0:
             self.from_direction = 2
             self.player.row = 14
             self.next_map()
+            self.game_timer += 3
 
     def check_player_location(self):
         if self.tile_data.surface_grid[self.player.row][self.player.col]:
