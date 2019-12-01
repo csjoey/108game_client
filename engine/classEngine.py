@@ -4,6 +4,7 @@ from engine import classPlayerData
 from engine import classPlayer
 import hashlib
 import arcade
+import pyglet
 
 
 class Engine:
@@ -43,6 +44,9 @@ class Engine:
         self.game_timer = None
         self.game_tick = None
         self.score = None
+        self.theme = None
+
+        self.mplayer = None
 
     def setup(self):
         self.from_direction = 0
@@ -63,13 +67,15 @@ class Engine:
 
         self.enemy_list = []
 
-        self.sound_theme = arcade.load_sound("res/sounds/game_music.wav")
+        self.sound_theme = pyglet.media.load("res/sounds/game_music.wav")
         self.sound_all_coins = arcade.sound.load_sound("res/sounds/nextstage.wav")
         self.sound_coin = arcade.sound.load_sound("res/sounds/coin.wav")
         self.sound_attack = arcade.sound.load_sound("res/sounds/hit.wav")
         self.sound_hurt = arcade.sound.load_sound("res/sounds/hurt.wav")
         self.sound_upgrade = arcade.sound.load_sound("res/sounds/upgrade.wav")
-        arcade.play_sound(self.sound_theme)
+        self.mplayer = pyglet.media.Player()
+        self.mplayer.queue(self.sound_theme)
+        self.mplayer.play()
 
         self.game_tick = 30
         self.game_timer = 10
@@ -224,7 +230,7 @@ class Engine:
         pass
 
     def end_game(self):
-        #arcade.pause(self.sound_theme)
+        self.mplayer.pause()
         self.player_data.seed = self.seed
         self.player_data.max_speed_upgrades = self.speed_upgrades
         self.player_data.max_health_upgrades = self.max_health_upgrades
