@@ -73,11 +73,12 @@ class Engine:
         self.sound_hurt = arcade.sound.load_sound("res/sounds/hurt.wav")
         self.sound_upgrade = arcade.sound.load_sound("res/sounds/upgrade.wav")
         self.mplayer = pyglet.media.Player()
-        self.mplayer.queue(self.sound_theme)
+        for x in range(10):
+            self.mplayer.queue(self.sound_theme)
         self.mplayer.play()
 
         self.game_tick = 30
-        self.game_timer = 25
+        self.game_timer = 30
         self.score = 0
 
     def update(self):
@@ -120,7 +121,7 @@ class Engine:
 
     def next_map(self):
         if self.enemy_locations:
-            self.game_timer += 5
+            self.game_timer += 2
             self.score += 1
         self.seed = hash_string(self.seed)
         self.tile_data.seed_gen(self.seed, self.from_direction)
@@ -246,7 +247,8 @@ class Engine:
             if enemy.row == (self.player.row - 1 + (2 * self.player.face_right)) and enemy.col == self.player.col:
                 enemy.kill()
                 arcade.sound.play_sound(self.sound_attack)
-                self.tile_data.surface_grid[enemy.row][enemy.col] = 2
+                if not self.tile_data.surface_grid[enemy.row][enemy.col] == 1:
+                    self.tile_data.surface_grid[enemy.row][enemy.col] = 2
             if not enemy.dead:
                 self.enemy_locations.append([enemy.row,enemy.col])
                 new_list.append(enemy)

@@ -70,7 +70,7 @@ class TileData():
         Begin population of the surface map based on game seed
         No real rules, just psuedo-randomness to a max number of items based on hex->int
         """
-        max_items = 7
+        max_items = 9
         items = int(seed[0:4], 16) % max_items  # Get num of items to render based on sha
         self.enemy_list = []
         for str_pos in range(items + 1):
