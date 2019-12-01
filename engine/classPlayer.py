@@ -31,7 +31,8 @@ class Player():
             self.dead = 1
 
     def max_health_up(self):
-        self.max_health += 1
+        if self.max_health <= 10:
+            self.max_health += 1
 
     def speed_up(self):
         if self.move_delay > 5:

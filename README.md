@@ -17,7 +17,7 @@
     
 ## How to Use
     Clone repository
-    Make sure arcade,requests,os,random, and hashlib libraries are present in your runtime.
+    Make sure arcade,requests,os,random,pyglet, and hashlib libraries are present in your runtime.
     (datastructures library may be required for older versions of python)
     
     run "RunGame.py" with all these libraries present in runtime.

@@ -8,6 +8,7 @@ class PlayerData:
         self.max_health_upgrades = None
         self.max_speed_upgrades = None
         self.coins = None
+        self.score = None
         self.playtime = None
 
     def load_local_save(self):
@@ -19,6 +20,7 @@ class PlayerData:
                 self.max_health_upgrades = data['save_game']["max_health_upgrades"]
                 self.max_speed_upgrades = data['save_game']["max_speed_upgrades"]
                 self.coins = data['save_game']["coins"]
+                self.score = data['save_game']['score']
                 self.playtime = data['save_game']["playtime"]
         except:
             self.blank_save()
@@ -32,6 +34,7 @@ class PlayerData:
                 "max_health_upgrades": self.max_health_upgrades,
                 "max_speed_upgrades": self.max_speed_upgrades,
                 "coins": self.coins,
+                "score": self.score,
                 "playtime": self.playtime
             }
         }
@@ -43,4 +46,5 @@ class PlayerData:
         self.max_health_upgrades = 0
         self.max_speed_upgrades = 0
         self.coins = 0
+        self.score = 0
         self.playtime = 0

@@ -1,6 +1,6 @@
 import arcade
 from engine import classEngine
-from render import classMenuRender
+from render import classGameOverRender
 
 class GameRender:
 
@@ -94,7 +94,7 @@ class GameRender:
     def update(self):
         self.engine.update()
         if self.engine.next_stage:
-            self.next_stage = classMenuRender.MenuRender
+            self.next_stage = classGameOverRender.GameOverRender
 
     def keypress(self, key):
         self.engine.keypress(key)

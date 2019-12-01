@@ -25,18 +25,17 @@ class Display(arcade.Window):
 
         # Setup display stages
         self.display_stage = None
-        self.game_over = None
-        self.score = None
+        self.last_key = None
+
+
 
     def setup(self):
         """
         Sets up views and data
 
         """
-        #self.display_stage = classGameRender.GameRender()
         self.display_stage = classMenuRender.MenuRender()
         self.display_stage.setup()
-        self.game_over = False
 
     def on_draw(self):
         """
@@ -52,15 +51,11 @@ class Display(arcade.Window):
         """
        Game update logic
         """
-        if self.display_stage.next_stage and not self.game_over:
+        if self.display_stage.next_stage:
             self.display_stage = self.display_stage.next_stage()
             self.display_stage.setup()
         else:
             self.display_stage.update()
-        if self.game_over:
-            self.score = self.display_stage.get_score()
-            self.display_stage = classGameOverRender.GameOverRender()
-            self.display_stage.setup(self.score)
 
     def on_key_press(self, key, key_modifiers):
         """
@@ -76,25 +71,6 @@ class Display(arcade.Window):
         Called whenever the user lets off a previously pressed key.
         """
         pass
-
-    def on_mouse_motion(self, x, y, delta_x, delta_y):
-        """
-        Called whenever the mouse moves.
-        """
-        pass
-
-    def on_mouse_press(self, x, y, button, key_modifiers):
-        """
-        Called when the user presses a mouse button.
-        """
-        pass
-
-    def on_mouse_release(self, x, y, button, key_modifiers):
-        """
-        Called when a user releases a mouse button.
-        """
-        pass
-
 
 def main():
     """ Main method """
