@@ -20,7 +20,7 @@ class Enemy:
             pass
         for row in self.moves:
             for col in self.moves:
-                if floor_grid[self.row + row][self.col + col]:
+                if floor_grid[self.row + row][self.col + col] > 0:
                     self.open_moves.append([self.row + row,self.col + col])
        # print("moves: ", self.open_moves)
         next_move = self.open_moves[random.randint(0, len(self.open_moves) - 1)]
