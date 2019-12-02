@@ -51,14 +51,13 @@ class MenuRender:
         self.draw_menu()
         if self.player_data.playtime:
             self.draw_saved_player()
-        arcade.draw_text("DEBUG:MENU", 0, 0, arcade.color.WHITE)
+        #arcade.draw_text("DEBUG:MENU", 0, 0, arcade.color.WHITE)
 
     def draw_saved_player(self):
-        # TODO Draw player item counts and upgrades on main menu
         arcade.draw_text(
             "Save Detected",
             50,
-            300,
+            310,
             arcade.color.GREEN,
             font_size=35,
             bold=True,
@@ -67,7 +66,7 @@ class MenuRender:
         arcade.draw_text(
             "Score:" + str(self.player_data.score),
             50,
-            200,
+            210,
             arcade.color.BLUE,
             font_size=35,
             bold=True,
@@ -76,8 +75,17 @@ class MenuRender:
         arcade.draw_text(
             "Coins:"+ str(self.player_data.coins),
             50,
-            100,
+            110,
             arcade.color.GOLD,
+            font_size=35,
+            bold=True,
+            font_name="Lato"
+        )
+        arcade.draw_text(
+            "Max Health Upgrades:"+ str(self.player_data.max_health_upgrades),
+            50,
+            10,
+            arcade.color.RED,
             font_size=35,
             bold=True,
             font_name="Lato"

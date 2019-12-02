@@ -13,7 +13,7 @@ class GameOverRender:
         self.timer = None
 
     def setup(self):
-        self.timer = 120
+        self.timer = 90
 
         self.player_data = classPlayerData.PlayerData()
         self.player_data.load_local_save()
@@ -28,7 +28,7 @@ class GameOverRender:
 
     def draw(self):
         self.draw_bg()
-        arcade.draw_text("DEBUG:GAMEOVER", 0, 0, arcade.color.WHITE,font_size=50)
+        arcade.draw_text("GAMEOVER", 210, 360, arcade.color.WHITE,font_size=50,align="center")
 
     def draw_bg(self):
         for row in range(16):

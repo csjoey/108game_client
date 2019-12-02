@@ -89,7 +89,7 @@ class GameRender:
         self.draw_ui()
         if self.engine.player.draw_sword:
             self.draw_sword()
-        arcade.draw_text("DEBUG:GAME", 0, 0, arcade.color.WHITE)
+        #arcade.draw_text("DEBUG:GAME", 0, 0, arcade.color.WHITE)
 
     def update(self):
         self.engine.update()

@@ -7,6 +7,16 @@
     for enemies who will attack you if you're next to them, but hit them once and theyll drop a heart.
     in order to progress to the next room, you must collect all the coins, but watch out! if you run 
     out of time displayed in the top right corner, or health displayed in the top left, the game ends.
+    
+    Enemies drop hearts.
+    
+    Once you've reached 10 health health upgrades add time to your timer.
+    
+    WASD - Up, Down, Left, Right
+    
+    Enter - Select/Attack
+    
+    Check console for seed input when starting a new game
 
 ## Special Thanks
     Sprites
