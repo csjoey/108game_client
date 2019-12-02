@@ -40,3 +40,8 @@
     (datastructures library may be required for older versions of python)
     
     run "RunGame.py" with all these libraries present in runtime.
+
+## Notes
+    At the time of commit, in certain instances of thermal throttling and cpu
+    warmup, the game may crash due to desych of arcade, there are currently no
+    plans to ground up arcade for mobile distrubutions of this game.
