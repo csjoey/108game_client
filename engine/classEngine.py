@@ -52,6 +52,8 @@ class Engine:
         self.from_direction = 0
         self.tile_data = classTileData.TileData()
 
+        self.enemy_list = []
+
         self.player_data = classPlayerData.PlayerData()
         self.player_data.load_local_save()
 
@@ -63,8 +65,6 @@ class Engine:
         self.total_coins = self.tile_data.return_coins()
 
         self.player = classPlayer.Player(self.max_health_upgrades, self.speed_upgrades)
-
-        self.enemy_list = []
 
         self.sound_theme = pyglet.media.load("res/sounds/game_music.wav")
         self.sound_all_coins = arcade.sound.load_sound("res/sounds/nextstage.wav")
@@ -102,6 +102,9 @@ class Engine:
     def keypress(self,key):
         self.player.draw_sword = False
 
+        if key == arcade.key.E:
+            print(self.enemy_locations)
+
         if key == arcade.key.W:
             self.player_move(0, 1)
 
@@ -127,7 +130,7 @@ class Engine:
         self.tile_data.seed_gen(self.seed, self.from_direction)
         self.enemy_list = self.tile_data.enemy_list
         self.enemy_locations = []
-        for enemy in self.enemy_list:
+        for enemy in self.tile_data.enemy_list:
             self.enemy_locations.append([enemy.row,enemy.col])
         self.room_coins = 0
         self.total_coins = self.tile_data.return_coins()

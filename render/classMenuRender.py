@@ -55,7 +55,33 @@ class MenuRender:
 
     def draw_saved_player(self):
         # TODO Draw player item counts and upgrades on main menu
-        pass
+        arcade.draw_text(
+            "Save Detected",
+            50,
+            300,
+            arcade.color.GREEN,
+            font_size=35,
+            bold=True,
+            font_name="Lato"
+        )
+        arcade.draw_text(
+            "Score:" + str(self.player_data.score),
+            50,
+            200,
+            arcade.color.BLUE,
+            font_size=35,
+            bold=True,
+            font_name="Lato"
+        )
+        arcade.draw_text(
+            "Coins:"+ str(self.player_data.coins),
+            50,
+            100,
+            arcade.color.GOLD,
+            font_size=35,
+            bold=True,
+            font_name="Lato"
+        )
 
     def draw_menu(self):
         arcade.draw_text("New Game",
