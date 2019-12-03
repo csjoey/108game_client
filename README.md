@@ -1,4 +1,23 @@
-#108game_client
+## 108game_client
+
+## Enter the Dungon
+    Yes it's spelled that way on purpose.
+    Enter the dungon is a proceedurally genrated dungeon crawler which you provide the
+    inital input for. To play the game, use WASD to move around and enter to attack. Watch out
+    for enemies who will attack you if you're next to them, but hit them once and theyll drop a heart.
+    in order to progress to the next room, you must collect all the coins, but watch out! if you run 
+    out of time displayed in the top right corner, or health displayed in the top left, the game ends.
+    
+    Enemies drop hearts.
+    
+    Once you've reached 10 health health upgrades add time to your timer.
+    
+    WASD - Up, Down, Left, Right
+    
+    Enter - Select/Attack
+    
+    Check console for seed input when starting a new game
+
 ## Special Thanks
     Sprites
     Robert, at https://0x72.itch.io/dungeontileset-ii
@@ -17,7 +36,12 @@
     
 ## How to Use
     Clone repository
-    Make sure arcade,requests,os,random, and hashlib libraries are present in your runtime.
+    Make sure arcade,requests,os,random,pyglet, and hashlib libraries are present in your runtime.
     (datastructures library may be required for older versions of python)
     
     run "RunGame.py" with all these libraries present in runtime.
+
+## Notes
+    At the time of commit, in certain instances of thermal throttling and cpu
+    warmup, the game may crash due to desych of arcade, there are currently no
+    plans to ground up arcade for mobile distrubutions of this game.

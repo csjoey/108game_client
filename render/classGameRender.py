@@ -1,6 +1,6 @@
 import arcade
 from engine import classEngine
-from render import classMenuRender
+from render import classGameOverRender
 
 class GameRender:
 
@@ -89,12 +89,12 @@ class GameRender:
         self.draw_ui()
         if self.engine.player.draw_sword:
             self.draw_sword()
-        arcade.draw_text("DEBUG:GAME", 0, 0, arcade.color.WHITE)
+        #arcade.draw_text("DEBUG:GAME", 0, 0, arcade.color.WHITE)
 
     def update(self):
         self.engine.update()
         if self.engine.next_stage:
-            self.next_stage = classMenuRender.MenuRender
+            self.next_stage = classGameOverRender.GameOverRender
 
     def keypress(self, key):
         self.engine.keypress(key)

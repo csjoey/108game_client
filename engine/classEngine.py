@@ -4,6 +4,7 @@ from engine import classPlayerData
 from engine import classPlayer
 import hashlib
 import arcade
+import pyglet
 
 
 class Engine:
@@ -43,11 +44,15 @@ class Engine:
         self.game_timer = None
         self.game_tick = None
         self.score = None
+        self.theme = None
+
+        self.mplayer = None
 
     def setup(self):
         self.from_direction = 0
         self.tile_data = classTileData.TileData()
-        # self.seed = input("Seed through console for now:")
+
+        self.enemy_list = []
 
         self.player_data = classPlayerData.PlayerData()
         self.player_data.load_local_save()
@@ -61,18 +66,19 @@ class Engine:
 
         self.player = classPlayer.Player(self.max_health_upgrades, self.speed_upgrades)
 
-        self.enemy_list = []
-
-        self.sound_theme = arcade.load_sound("res/sounds/game_music.wav")
+        self.sound_theme = pyglet.media.load("res/sounds/game_music.wav")
         self.sound_all_coins = arcade.sound.load_sound("res/sounds/nextstage.wav")
         self.sound_coin = arcade.sound.load_sound("res/sounds/coin.wav")
         self.sound_attack = arcade.sound.load_sound("res/sounds/hit.wav")
         self.sound_hurt = arcade.sound.load_sound("res/sounds/hurt.wav")
         self.sound_upgrade = arcade.sound.load_sound("res/sounds/upgrade.wav")
-        arcade.play_sound(self.sound_theme)
+        self.mplayer = pyglet.media.Player()
+        for x in range(10):
+            self.mplayer.queue(self.sound_theme)
+        self.mplayer.play()
 
         self.game_tick = 30
-        self.game_timer = 10
+        self.game_timer = 30
         self.score = 0
 
     def update(self):
@@ -95,8 +101,9 @@ class Engine:
 
     def keypress(self,key):
         self.player.draw_sword = False
-        if key == arcade.key.SPACE:
-            self.next_map()
+
+        if key == arcade.key.E:
+            print(self.enemy_locations)
 
         if key == arcade.key.W:
             self.player_move(0, 1)
@@ -116,51 +123,47 @@ class Engine:
             self.attack()
 
     def next_map(self):
+        if self.enemy_locations:
+            self.game_timer += 2
+            self.score += 1
         self.seed = hash_string(self.seed)
         self.tile_data.seed_gen(self.seed, self.from_direction)
         self.enemy_list = self.tile_data.enemy_list
         self.enemy_locations = []
-        for enemy in self.enemy_list:
-            self.enemy_locations.append(enemy.get_pos())
+        for enemy in self.tile_data.enemy_list:
+            self.enemy_locations.append([enemy.row,enemy.col])
         self.room_coins = 0
         self.total_coins = self.tile_data.return_coins()
 
     def player_move(self, x_offset=0, y_offset=0):
         if self.tile_data.floor_grid[self.player.row + x_offset][self.player.col] > 0:
-            if not ((self.player.row + x_offset, self.player.col) in self.enemy_locations):
+            if not ([self.player.row + x_offset, self.player.col] in self.enemy_locations):
                 self.player.move(self.player.row + x_offset, self.player.col)
 
         if self.tile_data.floor_grid[self.player.row][self.player.col + y_offset] > 0:
-            if not ((self.player.row + x_offset, self.player.col) in self.enemy_locations):
+            if not ([self.player.row, self.player.col + y_offset] in self.enemy_locations):
                 self.player.move(self.player.row, self.player.col + y_offset)
 
         if self.player.col == 15:
             self.from_direction = 3
             self.player.col = 1
             self.next_map()
-            self.game_timer += 3
-            self.score += 1
 
         if self.player.row == 15:
             self.from_direction = 4
             self.player.row = 1
             self.next_map()
-            self.game_timer += 3
-            self.score += 1
 
         if self.player.col == 0:
             self.from_direction = 1
             self.player.col = 14
             self.next_map()
-            self.game_timer += 3
-            self.score += 1
 
         if self.player.row == 0:
             self.from_direction = 2
             self.player.row = 14
             self.next_map()
-            self.game_timer += 3
-            self.score += 1
+            self.game_timer += 5
 
     def check_player_location(self):
         if self.tile_data.surface_grid[self.player.row][self.player.col]:
@@ -174,7 +177,7 @@ class Engine:
         for enemy in self.enemy_list:
             if not self.enemy_attack(enemy):
                 enemy.move(self.tile_data.floor_grid)
-            self.enemy_locations.append(enemy.get_pos())
+            self.enemy_locations.append([enemy.row,enemy.col])
 
     def enemy_attack(self, enemy):
         for row in enemy.moves:
@@ -208,9 +211,12 @@ class Engine:
         arcade.sound.play_sound(self.sound_upgrade)
 
     def max_health_pickup(self):
-        self.player.max_health_up()
-        self.max_health_upgrades += 1
-        arcade.sound.play_sound(self.sound_upgrade)
+        if self.player.max_health == 10:
+            self.game_timer += 2
+        else:
+            self.player.max_health_up()
+            self.max_health_upgrades += 1
+            arcade.sound.play_sound(self.sound_upgrade)
 
     def speed_pickup(self):
         self.player.speed_up()
@@ -224,11 +230,12 @@ class Engine:
         pass
 
     def end_game(self):
-        #arcade.pause(self.sound_theme)
+        self.mplayer.pause()
         self.player_data.seed = self.seed
         self.player_data.max_speed_upgrades = self.speed_upgrades
         self.player_data.max_health_upgrades = self.max_health_upgrades
         self.player_data.coins += self.player.coins
+        self.player_data.score += self.score
         self.player_data.playtime = 1
         self.player_data.save_local_save()
         self.next_stage = True
@@ -242,9 +249,11 @@ class Engine:
         for enemy in self.enemy_list:
             if enemy.row == (self.player.row - 1 + (2 * self.player.face_right)) and enemy.col == self.player.col:
                 enemy.kill()
-                self.enemy_locations.append(enemy.get_pos())
                 arcade.sound.play_sound(self.sound_attack)
+                if not self.tile_data.surface_grid[enemy.row][enemy.col] == 1:
+                    self.tile_data.surface_grid[enemy.row][enemy.col] = 2
             if not enemy.dead:
+                self.enemy_locations.append([enemy.row,enemy.col])
                 new_list.append(enemy)
         self.enemy_list = new_list
 
