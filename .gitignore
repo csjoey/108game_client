@@ -1,2 +1,4 @@
 # Default ignored files
 .idea/
+engine/__pycache__/
+render/__pycache__/
