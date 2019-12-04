@@ -1,1 +1,6 @@
-arcade,requests,os,random,pyglet,hashlib
+arcade
+requests
+os
+random
+pyglet
+hashlib
