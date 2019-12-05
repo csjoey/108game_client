@@ -50,7 +50,7 @@
     run "RunGame.py" with all these libraries present in runtime.
     
 ## Preview
-    [link text](https://youtu.be/65-RoPyEyFM "Youtube")
+    https://youtu.be/65-RoPyEyFM
 
 
 ## Notes
