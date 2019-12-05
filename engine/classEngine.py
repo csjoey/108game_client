@@ -128,7 +128,7 @@ class Engine:
 
     def next_map(self):
         self.clear = 0
-        if self.enemy_locations:
+        if self.enemy_locations != None:
             self.game_timer += 2
             self.score += 1
         self.seed = hash_string(self.seed)
