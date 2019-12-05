@@ -1,6 +1,4 @@
 arcade
 requests
-os
-random
 pyglet
 hashlib
