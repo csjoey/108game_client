@@ -44,7 +44,7 @@ class Display(arcade.Window):
 
         self.display_stage.draw()
 
-        arcade.finish_render()
+        #arcade.finish_render()
 
     def on_update(self, delta_time):
         """

@@ -17,6 +17,7 @@ class Engine:
         self.enemy_locations = None
         self.player = None
         self.player_data = None
+        self.clear = None
 
         self.max_health_upgrades = None
         self.speed_upgrades = None
@@ -82,6 +83,9 @@ class Engine:
         self.score = 0
 
     def update(self):
+
+        self.clear_exits()
+
         self.check_player_location()
 
         self.player.sword_ticker()
@@ -123,7 +127,8 @@ class Engine:
             self.attack()
 
     def next_map(self):
-        if self.enemy_locations:
+        self.clear = 0
+        if self.enemy_locations != None:
             self.game_timer += 2
             self.score += 1
         self.seed = hash_string(self.seed)
@@ -193,12 +198,17 @@ class Engine:
         arcade.sound.play_sound(self.sound_coin)
         self.player.coins += 1
         self.room_coins += 1
-        if self.room_coins == self.total_coins:
-            arcade.sound.play_sound(self.sound_all_coins)
-            for row in self.exit_list:
-                for col in self.exit_list:
-                    if self.tile_data.floor_grid[row][col] == -1:
-                        self.tile_data.floor_grid[row][col] = 1
+
+    def clear_exits(self):
+        if not self.clear:
+            if self.room_coins == self.total_coins and not len(self.enemy_list):
+                self.clear = 1
+                arcade.sound.play_sound(self.sound_all_coins)
+                for row in self.exit_list:
+                    for col in self.exit_list:
+                        if self.tile_data.floor_grid[row][col] == -1:
+                            self.tile_data.floor_grid[row][col] = 1
+
 
     def get_score(self):
         return self.score
@@ -250,6 +260,7 @@ class Engine:
             if enemy.row == (self.player.row - 1 + (2 * self.player.face_right)) and enemy.col == self.player.col:
                 enemy.kill()
                 arcade.sound.play_sound(self.sound_attack)
+                self.game_timer += 2
                 if not self.tile_data.surface_grid[enemy.row][enemy.col] == 1:
                     self.tile_data.surface_grid[enemy.row][enemy.col] = 2
             if not enemy.dead:
