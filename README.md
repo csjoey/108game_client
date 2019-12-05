@@ -11,7 +11,7 @@
     in order to progress to the next room, you must collect all the coins, but watch out! if you run 
     out of time displayed in the top right corner, or health displayed in the top left, the game ends.
     
-    Enemies drop hearts.
+    Enemies drop hearts and 2 time when killed.
     
     Once you've reached 10 health health upgrades add time to your timer.
     
@@ -50,6 +50,7 @@
     run "RunGame.py" with all these libraries present in runtime.
     
 ## Preview
+    https://youtu.be/65-RoPyEyFM
 
 
 ## Notes
