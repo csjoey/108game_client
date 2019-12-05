@@ -22,7 +22,7 @@
     Check console for seed input when starting a new game
     
 ## Authors
-    Joseph Loporto Joelopor@gmail.com
+    Joseph Loporto Joelopor@udel.edu
     Caleb Davis caldavis@udel.edu
 
 ## Special Thanks
