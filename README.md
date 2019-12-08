@@ -19,6 +19,7 @@
     
     Enter - Select/Attack
     
+    !! IMPORTANT !!
     Check console for seed input when starting a new game
     
 ## Authors
