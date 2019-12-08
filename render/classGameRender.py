@@ -3,6 +3,9 @@ from engine import classEngine
 from render import classGameOverRender
 
 class GameRender:
+    """
+    Renders game, handles drawing for game engine
+    """
 
     def __init__(self):
         # Engine
@@ -82,6 +85,7 @@ class GameRender:
         ]
 
     def draw(self):
+        # Draws everything
         self.draw_bg()
         self.draw_fg()
         self.draw_player()
@@ -92,14 +96,17 @@ class GameRender:
         #arcade.draw_text("DEBUG:GAME", 0, 0, arcade.color.WHITE)
 
     def update(self):
+        # Runs functions that need updating, updates engine
         self.engine.update()
         if self.engine.next_stage:
             self.next_stage = classGameOverRender.GameOverRender
 
     def keypress(self, key):
+        # Passes keypresses through to engine
         self.engine.keypress(key)
 
     def draw_bg(self):
+        # Draws the floor/wals
         for row in range(16):
             for col in range(16):
                 arcade.draw_texture_rectangle(
@@ -111,6 +118,7 @@ class GameRender:
                 )
 
     def draw_fg(self):
+        # Draws surface items
         for row in range(16):
             for col in range(16):
                 if self.engine.tile_data.surface_grid[row][col] not in [0,5]:
@@ -123,6 +131,7 @@ class GameRender:
                     )
 
     def draw_player(self):
+        # Draws player
         arcade.draw_texture_rectangle(
             self.engine.player.row * 45 + 22.5,
             self.engine.player.col * 45 + 22.5,
@@ -132,6 +141,7 @@ class GameRender:
         )
 
     def draw_enemies(self):
+        # Draws enemies from list
         for enemy in self.engine.enemy_list:
             arcade.draw_texture_rectangle(
                 enemy.row * 45 + 22.5,
@@ -142,6 +152,7 @@ class GameRender:
             )
 
     def draw_sword(self):
+        # Draws sword animation when active
         arcade.draw_texture_rectangle(
             (self.engine.player.row - 1 + (2 * self.engine.player.face_right)) * 45 + 22.5,
             self.engine.player.col * 45 + 22.5,
@@ -152,6 +163,7 @@ class GameRender:
         )
 
     def draw_ui(self):
+        # Draws ui, including health, pickups, coins
         for x in range(self.engine.player.max_health):
             if x + 1 <= self.engine.player.health:
                 arcade.draw_texture_rectangle(

@@ -8,6 +8,9 @@ import pyglet
 
 
 class Engine:
+    """
+    Class to handle game engine things, workplace for tile, enemy, and player objects
+    """
 
     def __init__(self):
         self.seed = None
@@ -25,6 +28,7 @@ class Engine:
         self.total_coins = None
         self.from_direction = None
 
+        # This switch case handles the different items that appear on the surface grid
         self.switch = {
             1: self.coin_pickup,
             2: self.heart_pickup,
@@ -83,6 +87,7 @@ class Engine:
         self.score = 0
 
     def update(self):
+        # Runs each time the window is updated
 
         self.clear_exits()
 
@@ -104,6 +109,7 @@ class Engine:
             self.game_tick -= 1
 
     def keypress(self,key):
+        # Handles keypresses
         self.player.draw_sword = False
 
         if key == arcade.key.E:
@@ -127,6 +133,7 @@ class Engine:
             self.attack()
 
     def next_map(self):
+        # Handles generation of next room
         self.clear = 0
         if self.enemy_locations != None:
             self.game_timer += 2
@@ -141,6 +148,7 @@ class Engine:
         self.total_coins = self.tile_data.return_coins()
 
     def player_move(self, x_offset=0, y_offset=0):
+        # Checks if player movement is possible than moves player to tile or new room
         if self.tile_data.floor_grid[self.player.row + x_offset][self.player.col] > 0:
             if not ([self.player.row + x_offset, self.player.col] in self.enemy_locations):
                 self.player.move(self.player.row + x_offset, self.player.col)
@@ -171,12 +179,14 @@ class Engine:
             self.game_timer += 5
 
     def check_player_location(self):
+        # Runs each update, checks players location on surface grid to pickup items
         if self.tile_data.surface_grid[self.player.row][self.player.col]:
             func = self.switch.get(self.tile_data.surface_grid[self.player.row][self.player.col])
             self.tile_data.surface_grid[self.player.row][self.player.col] = 0
             func()
 
     def enemy_movement(self):
+        # Moves all enemies in enemy list, unless they can attack
         self.enemy_locations = []
 
         for enemy in self.enemy_list:
@@ -185,6 +195,7 @@ class Engine:
             self.enemy_locations.append([enemy.row,enemy.col])
 
     def enemy_attack(self, enemy):
+        # Enemy deals damage to player each time this is run
         for row in enemy.moves:
             for col in enemy.moves:
                 if (self.player.row == enemy.row + row) and (self.player.col == enemy.col + col):
@@ -195,11 +206,13 @@ class Engine:
                     return True
 
     def coin_pickup(self):
+        # Runs upon coin pickup
         arcade.sound.play_sound(self.sound_coin)
         self.player.coins += 1
         self.room_coins += 1
 
     def clear_exits(self):
+        # Allows movement to next room when objectives are complete
         if not self.clear:
             if self.room_coins == self.total_coins and not len(self.enemy_list):
                 self.clear = 1
@@ -211,16 +224,20 @@ class Engine:
 
 
     def get_score(self):
+        # Returns score int
         return self.score
 
     def get_time(self):
+        # Returns time int
         return self.game_timer
 
     def heart_pickup(self):
+        # Handles heart pickup
         self.player.gain_health()
         arcade.sound.play_sound(self.sound_upgrade)
 
     def max_health_pickup(self):
+        # Handles max health pickup, if player already at 10 max health, increases game timer
         if self.player.max_health == 10:
             self.game_timer += 2
         else:
@@ -229,17 +246,22 @@ class Engine:
             arcade.sound.play_sound(self.sound_upgrade)
 
     def speed_pickup(self):
+        # Handles speed pickup, allows player to spam keys faster
+        # Maybe change to tick system, with keys held down?
         self.player.speed_up()
         self.speed_upgrades += 1
         arcade.sound.play_sound(self.sound_upgrade)
 
     def enemy_spawn(self):
+        # Does nothing if player encounters enemy spawn point
         pass
 
     def stage_done(self):
+        # No usage, maybe remove?
         pass
 
     def end_game(self):
+        # Saves game upon end
         self.mplayer.pause()
         self.player_data.seed = self.seed
         self.player_data.max_speed_upgrades = self.speed_upgrades
@@ -251,9 +273,11 @@ class Engine:
         self.next_stage = True
 
     def attack(self):
+        # Player attack animation
         self.player.draw_sword = True
 
     def sword_collide(self):
+        # Handles sword collision with enemies
         new_list = []
         self.enemy_locations = []
         for enemy in self.enemy_list:
@@ -271,6 +295,7 @@ class Engine:
 
 # Locally global functions
 def hash_string(str_obj):
+    # Generates hash based on seed
     return hashlib.sha256(str_obj.encode()).hexdigest()
 
 

@@ -2,6 +2,9 @@ import arcade
 from engine import classPlayerData
 from render import classGameRender
 class MenuRender:
+    """
+    Renders the menu screen
+    """
 
     def __init__(self):
         self.next_stage = None
@@ -28,9 +31,11 @@ class MenuRender:
         self.selected = 0
 
     def update(self):
+        # No need to update
         pass
 
     def keypress(self, key):
+        # handles menu controls
         self.selected += (1 - self.selected) if key == arcade.key.S else 0
         self.selected -= (1 * self.selected) if key == arcade.key.W else 0
 
@@ -39,14 +44,17 @@ class MenuRender:
             func()
 
     def new_game(self):
+        # Creates a new game based on seed GIVEN IN CONSOLE
         self.player_data.blank_save()
         self.player_data.save_local_save()
         self.next_stage = classGameRender.GameRender
 
     def continue_game(self):
+        # Creates game based on save data
         self.next_stage = classGameRender.GameRender
 
     def draw(self):
+        # Draws the menu
         self.draw_bg()
         self.draw_menu()
         if self.player_data.playtime:
@@ -54,6 +62,7 @@ class MenuRender:
         #arcade.draw_text("DEBUG:MENU", 0, 0, arcade.color.WHITE)
 
     def draw_saved_player(self):
+        # Draws save data if detected
         arcade.draw_text(
             "Save Detected",
             50,
@@ -92,6 +101,7 @@ class MenuRender:
         )
 
     def draw_menu(self):
+        # Draws menu options
         arcade.draw_text("New Game",
                          50,
                          600,
@@ -114,6 +124,7 @@ class MenuRender:
         )
 
     def draw_bg(self):
+        # Draws background
         for row in range(16):
             for col in range(16):
                 arcade.draw_texture_rectangle(

@@ -13,6 +13,9 @@ SCREEN_TITLE = "The Dungon" # mispelled on purpose
 GAME_SPEED = 1/30 #30 fps
 
 class Display(arcade.Window):
+    """
+    Creates object for the window, imports from all other classes
+    """
 
     def __init__(self, width, height, title):
         """

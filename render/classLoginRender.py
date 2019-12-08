@@ -1,5 +1,8 @@
 import arcade
 class LoginRender:
+    """
+    For future use, handles login for server data
+    """
 
     def __init__(self):
         pass

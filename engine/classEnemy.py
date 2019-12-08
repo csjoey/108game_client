@@ -2,6 +2,9 @@ import random
 
 
 class Enemy:
+    """
+    creates enemy objects
+    """
 
     def __init__(self, row, col):
         self.row = row
@@ -11,10 +14,12 @@ class Enemy:
         self.moves = [-1,0,1]
 
     def set_pos(self, row, col):
+        # sets position based on parameters
         self.row = row
         self.col = col
 
     def move(self, floor_grid):
+        # Random movement
         moves = self.moves
         self.open_moves = []
         if self.row == 14:
@@ -34,9 +39,11 @@ class Enemy:
         self.set_pos(next_move[0], next_move[1])
 
     def kill(self):
+        # sets status of enemy object to dead
         self.dead = 1
 
     def update(self, player):
+        # Runs when engine is updated
         pass
 
 

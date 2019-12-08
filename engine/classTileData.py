@@ -1,7 +1,10 @@
 import random
 from engine import classEnemy
 
-class TileData():
+class TileData:
+    """
+    Creates tiledata object, basically the grid/maps that define building tiles and surface items/enemies
+    """
 
     def __init__(self):
         self.enemy_list = []
