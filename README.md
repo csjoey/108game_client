@@ -55,5 +55,4 @@
 
 
 ## Notes
-    At the time of commit, in certain instances of thermal throttling and cpu
-    warmup, the game may crash due to desych of arcade/Might just be linux.
+    At the time of commit, the game may crash due to desych of arcade mostly observed on arch linux.
